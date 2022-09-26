@@ -1,0 +1,8 @@
+### Alexis Webster CIS 371
+
+# Web App Proposal
+## Assignment Scheduler
+I would like to create a webapp that helps you schedule out tasks/assignments.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The way I typically do my assignments is that I break it up into small pieces, and then I divide those pieces over a certain number of days. For example, when I have readings assigned, I calculate how many pages I have to read and then divide that by how many days I have to read them. Similarly, I also do this with projects, where I try to make a detailed plan for my projects in which I break up everything I need to do into concrete steps, and then I divide these steps over the days that I have to complete them.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Since this is something I do myself that takes a little longer than it should with just pen and paper, I think it would make a great web application, and it could even maybe help my classmates adopt a similar method of time management.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;My idea is that you enter the assignments you have to do and how many tasks or pages required and the details within them. Then you enter how many days you have to do them (and you can also have 1/2 days or 1/4 days where you do less work if you have other plans), and it will calculate the schedule for the tasks and readings for you. It could also export PDFs of planner pages with checklist on it, or it could also export it in a calendar format.
