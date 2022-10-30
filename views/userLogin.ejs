@@ -1,0 +1,31 @@
+<h1>Assignment Scheduler</h1>
+<h2>Login</h2>
+<form action="/assignments" accept-charset="UTF-8" method="post">
+    <div class="field">
+        <label for="user_email">Email</label>
+        <input type="text" name="user[email]" id="email" value="<%= user.email %>">
+    </div>
+
+    <div class="padding">
+        <style>
+            .padding {
+                height: 10px;
+            }
+        </style>
+    </div>
+
+    <div class=" field ">
+        <label for="user_password ">Password</label>
+        <input type="text" name="user[password]" id="password" value="<%= user.password %>">
+    </div>
+
+    <div class="padding"></div>
+
+    <div class="padding"></div>
+
+    <div class="actions">
+        <input type="submit" name="commit" value="Login" />
+    </div>
+</form>
+
+<a href="/user/new">Sign Up</a>
