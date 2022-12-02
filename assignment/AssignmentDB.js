@@ -7,23 +7,23 @@ class AssignmentDB {
 
     static initialize() {
         this.db.serialize(() => {
-            this.db.run('CREATE TABLE Assignments (id INTEGER PRIMARY KEY, name TEXT NOT NULL, FOREIGN KEY(userId) REFERENCES Users(id));');
+            this.db.run('CREATE TABLE Assignments (id INTEGER PRIMARY KEY, name TEXT NOT NULL, FOREIGN KEY(assignmentId) REFERENCES Users(id));');
         });
     }
 
     static allAssignments() {
         return new Promise((resolve, reject) => {
-            this.db.all('SELECT * FROM Users', (err, response) => {
-                resolve(response.map((item) => new User(item)));
+            this.db.all('SELECT * FROM Assignments', (err, response) => {
+                resolve(response.map((item) => new Assignment(item)));
             });
         });
     }
 
     static find(id) {
         return new Promise((resolve, reject) => {
-            this.db.all(`SELECT * FROM Users WHERE (id == ${id})`, (err, rows) => {
+            this.db.all(`SELECT * FROM Assignments WHERE (id == ${id})`, (err, rows) => {
                 if (rows.length >= 1) {
-                    resolve(new User(rows[0]));
+                    resolve(new Assignment(rows[0]));
                 } else {
                     reject(`Id ${id} not found`);
                 }
@@ -32,37 +32,37 @@ class AssignmentDB {
     }
 
     static create(description) {
-        let newUser = new User(description);
-        if (newUser.isValid()) {
+        let newAssignment = new Assignment(description);
+        if (newAssignment.isValid()) {
             return new Promise((resolve, reject) => {
-                this.db.run(`INSERT INTO Users (fname, lname, email, password) VALUES ("${newUser.fname}", "${newUser.lname}", "${newUser.email}", "${newUser.password}")`,
+                this.db.run(`INSERT INTO Assignments (name, userId) VALUES ("${newAssignment.name}", "${newAssignment.userId}")`,
                     function(err, data) {
-                        newUser.id = this.lastID;
-                        resolve(newUser);
+                        newAssignment.id = this.lastID;
+                        resolve(newAssignment);
                     });
             });
         } else {
-            return newUser;
+            return newAssignment;
         }
     }
 
     
-    static deleteUser(user) {
+    static deleteAssignment(assignment) {
         return new Promise((resolve, reject) => {
-            this.db.run(`DELETE FROM Users WHERE id="${user.id}"`, function(err, data) {
-                user.pk = this.lastID;
-                resolve(user)
+            this.db.run(`DELETE FROM Assignments WHERE id="${assignment.id}"`, function(err, data) {
+                assignment.pk = this.lastID;
+                resolve(assignment)
             })
         })
     }
 
 
-    static update(user) {
-        this.db.run(`UPDATE Users SET fname="${user.fname}", lname="${user.lname}", email="${user.email}", password="${user.password}" WHERE id="${user.id}"`);
+    static update(assignment) {
+        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}"`);
     }
 }
 
 
-UserDB.db = new sqlite3.Database('user.sqlite');
+AssignmentDB.db = new sqlite3.Database('assignment.sqlite');
 
-module.exports = UserDB;
+module.exports = AssignmentDB;
