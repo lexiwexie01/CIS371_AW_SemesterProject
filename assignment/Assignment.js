@@ -4,7 +4,7 @@ class Assignment {
         if (description) {
             this.id = description.id;
             this.name = description.name;
-            this.userId = description.userId
+            this.userId = description.userId;
         }
         this.errors = [];
     }

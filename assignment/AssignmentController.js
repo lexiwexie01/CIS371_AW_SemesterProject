@@ -1,5 +1,7 @@
 const Assignment = require('./Assignment');
 const AssignmentDB = require('./AssignmentDB');
+const User = require('../user/User');
+const UserDB = require('../user/UserDB');
 
 // Base taken from assignment 6
 class AssignmentController {
@@ -65,7 +67,15 @@ class AssignmentController {
     }
 
     async show(req, res) {
-        
+        let id = req.params.id;
+        let assignment = await AssignmentDB.find(id);
+
+        if (!assignment) {
+            res.send("Could not find assignment with id of " + id);
+        } else {
+            if (assignm)
+            res.render('assignmentShow', { assignment: assignment });
+        }
     }
 
 }

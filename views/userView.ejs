@@ -1,0 +1,51 @@
+<html>
+
+<head>
+    <style>
+        .label {
+            display: inline-block;
+            width: 6em;
+            font-weight: bold;
+        }
+        .padding {
+            height: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="padding"></div>
+
+    <span><span class='label'>First Name:</span>
+    <%= user.fname %>
+        </span><br>
+
+        <div class="padding"></div>
+
+        <span><span class='label'>Last Name:</span>
+        <%= user.lname %>
+            </span><br>
+
+            <div class="padding"></div>
+
+            <span><span class='label'>Email:</span>
+            <%= user.email %>
+                </span><br>
+
+                <div class="padding"></div>
+
+                    <div class="padding"></div>
+
+                    <p>
+                        <a href="/users/<%= user.id %>/assignments">Assignments</a>
+                    </p>
+
+                    <p>
+                        <a href="/users">Back</a>
+                        <a href="/users/<%= user.id %>/edit">Edit</a>
+                    </p>
+
+</body>
+
+</html>

@@ -1,10 +1,13 @@
 // Base taken from assignment 6
-
+// Alexis Webster
 
 const express = require('express')
 
 const UserController = require('./user/UserController');
 const userController = new UserController();
+
+const AssignmentController = require('./assignment/AssignmentController');
+const assignmentController = new AssignmentController();
 
 const bodyParser = require('body-parser');
 
@@ -53,9 +56,12 @@ app.get('/users/:id/delete', (req, res) => {
 
 /* Update a user */
 app.post('/users/:id', (req, res) => {
-    console.log("Update: ");
-    console.log(req.body);
     userController.update(req, res);
 });
+
+/* Display a user's assignments */
+app.get('/users/:id/assignments', (req, res) => {
+    assignmentController.show(req, res);
+})
 
 app.listen(port, () => console.log(`Assignment Scheduler app listening on port ${port}!`))
