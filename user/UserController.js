@@ -1,26 +1,8 @@
 const User = require('./User');
-const UserDB = require('./MemoryUserDB');
+const UserDB = require('./UserDB');
 
 // Base taken from assignment 6
 class UserController {
-
-    // Methods below are also in BugController
-
-    /*async index(req, res) {
-        let users = await UserDB.allUsers();
-        res.render('userIndex', { users: users });
-    }
-
-    async show(req, res) {
-        let id = req.params.id;
-        let user = await UserDB.find(id);
-
-        if (!user) {
-            res.send("Could not find user with id of " + id);
-        } else {
-            res.render('userShow', { user: user });
-        }
-    }
 
     newUser(req, res) {
         res.render('userNew', { user: new User() });
@@ -87,7 +69,11 @@ class UserController {
             res.end();
         }
     }
-*/
+
+    async index(req, res) {
+        let users = await UserDB.allUsers();
+        res.render('userIndex', { users: users });
+    }
 
     async rawIndex(req, res) {
         let users = await UserDB.allUsers();
@@ -101,7 +87,6 @@ class UserController {
 
         if (newUser.isValid(false)) {
 
-            // Send a redirect to the "show" route for the new user.
             res.writeHead(302, { 'Location': `/assignments` });
             res.end();
         } else {
@@ -113,14 +98,14 @@ class UserController {
         res.render('userNew', { user: new User() });
     }
 
-    async edit(req, res) {
+    async show(req, res) {
         let id = req.params.id;
         let user = await UserDB.find(id);
 
         if (!user) {
             res.send("Could not find user with id of " + id);
         } else {
-            res.render('userEdit', { user: user });
+            res.render('userShow', { user: user });
         }
     }
 

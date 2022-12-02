@@ -1,0 +1,59 @@
+<!-- Alexis Webster -->
+<% 
+  if (user.id) {
+    submitLabel = "Update User";
+    route = `/users/${user.id}`;
+  } else {
+    submitLabel = "Create User";
+    route = "/users";
+  }
+%>
+    <% if (user.errors.length > 0) { %>
+        <% console.log("Found errors"); console.log(user.errors); %>
+            <div>
+                <p>Errors:</p>
+                <ul>
+                    <%- user.errors.map((item) => `<li>${item}</li>` ).join("\n"); %>
+                </ul>
+            </div>
+            <% } %>
+
+                <form action="<%=route%>" accept-charset="UTF-8" method="post">
+                    <div class="field">
+                        <label for="user_fname">First Name</label>
+                        <input type="text" name="user[fname]" id="fname" value="<%= user.fname %>">
+                    </div>
+
+                    <div class="padding">
+                        <style>
+                            .padding {
+                                height: 10px;
+                            }
+                        </style>
+                    </div>
+
+                    <div class=" field ">
+                        <label for="user_lname ">Last Name</label>
+                        <input type="text" name="user[lname]" id="lname" value="<%= user.lname %>">
+                    </div>
+
+                    <div class="padding"></div>
+
+                    <div class=" field ">
+                        <label for="user_email ">Email</label>
+                        <input type="text" name="user[email]" id="email" value="<%= user.email %>">
+                    </div>
+
+                    <div class="padding"></div>
+
+                    <div class=" field ">
+                        <label for="user_password ">Password</label>
+                        <input type="text" name="user[password]" id="password" value="<%= user.password %>">
+                    </div>
+
+                    <div class="padding"></div>
+
+                    <div class="actions">
+                        <input type="submit" name="commit" value="<%= submitLabel %>" />
+                    </div>
+                </form>

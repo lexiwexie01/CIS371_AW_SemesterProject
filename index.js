@@ -1,21 +1,16 @@
-// Express documentation: https://expressjs.com/en/api.html
 // Base taken from assignment 6
 
 
-/* Import the express npm module */
 const express = require('express')
 
 const UserController = require('./user/UserController');
 const userController = new UserController();
 
-/* Import the body-parser module.  (Used for parsing Post data) */
 const bodyParser = require('body-parser');
 
-/* Instantiate a server object*/
 const app = express()
 const port = 3000
 
-/* Tell the server to use EJS by default */
 app.set('view engine', 'ejs');
 
 /* Parse the request body if there is POST data */
@@ -27,7 +22,7 @@ app.get('/users', (req, res) => {
 });
 
 /* Create a new user from users page*/
-app.post('/scheduler/login', (req, res) => {
+app.post('/users', (req, res) => {
     userController.create(req, res);
 });
 
@@ -63,8 +58,4 @@ app.post('/users/:id', (req, res) => {
     userController.update(req, res);
 });
 
-
-
-
-/* Launch the server */
-app.listen(port, () => console.log(`Bug app listening on port ${port}!`))
+app.listen(port, () => console.log(`Assignment Scheduler app listening on port ${port}!`))
