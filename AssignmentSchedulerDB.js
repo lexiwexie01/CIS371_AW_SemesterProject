@@ -8,10 +8,10 @@ class AssignmentSchedulerDB {
 
     static initialize() {
         this.db.serialize(() => {
-            this.db.run('CREATE TABLE Users (id INTEGER PRIMARY KEY, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT NOT NULL UNIQUE, password TEXT NOT NULL, );');
+            this.db.run('CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL);');
             this.db.run('INSERT INTO Users (fname, lname, email, password) VALUES ("Alexis", "Webster", "alexis@web.com", "password");');
             
-            this.db.run('CREATE TABLE Assignments (id INTEGER PRIMARY KEY, name TEXT NOT NULL, FOREIGN KEY(assignmentId) REFERENCES Users(id));');
+            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (id INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES Users(id));');
         });
     }
 

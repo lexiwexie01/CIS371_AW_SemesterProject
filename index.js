@@ -3,11 +3,8 @@
 
 const express = require('express')
 
-const UserController = require('./user/UserController');
-const userController = new UserController();
-
-const AssignmentController = require('./assignment/AssignmentController');
-const assignmentController = new AssignmentController();
+const AssignmentSchedulerController = require('./AssignmentSchedulerController');
+const assignmentSchedulerController = new AssignmentSchedulerController();
 
 const bodyParser = require('body-parser');
 
