@@ -1,7 +1,7 @@
 const Assignment = require('./Assignment');
-const AssignmentDB = require('./AssignmentDB');
+const AssignmentDB = require('../AssignmentSchedulerDB');
 const User = require('../user/User');
-const UserDB = require('../user/UserDB');
+const UserDB = require('../UserDB');
 
 // Base taken from assignment 6
 class AssignmentController {

@@ -1,5 +1,5 @@
 const User = require('./User');
-const UserDB = require('./UserDB');
+const UserDB = require('../UserDB');
 
 // Base taken from assignment 6
 class UserController {
@@ -39,7 +39,7 @@ class UserController {
         } else {
             UserDB.delete(user);
             let users = await UserDB.allUsers();
-            res.render('userIndex', { users: users });
+            res.render('userLogin', { users: users });
         }
     }
 
@@ -72,7 +72,7 @@ class UserController {
 
     async index(req, res) {
         let users = await UserDB.allUsers();
-        res.render('userIndex', { users: users });
+        res.render('userLogin', { users: users });
     }
 
     async rawIndex(req, res) {
@@ -105,7 +105,7 @@ class UserController {
         if (!user) {
             res.send("Could not find user with id of " + id);
         } else {
-            res.render('userShow', { user: user });
+            res.render('userView', { user: user });
         }
     }
 
