@@ -12,17 +12,17 @@ class AssignmentSchedulerController {
 
     // TODO
     newAssignment(req, res) {
-        
+        res.render('assignmentNew', {assignment: new Assignment()});
     }
 
     async createUser(req, res) {
         console.log("About to create user");
         console.log(req.body);
-        let latestUser = await AssignmentSchedulerDB.create(req.body.user);
+        let latestUser = await AssignmentSchedulerDB.createUser(req.body.user);
 
         if (latestUser.isValid(false)) {
 
-            res.writeHead(302, { 'Location': `/users` });
+            res.writeHead(302, { 'Location': `/assignment-scheduler` });
             res.end();
         } else {
             res.render('userNew', { user: latestUser });
@@ -125,7 +125,7 @@ class AssignmentSchedulerController {
             console.log("About to call update");
 
             // Send a redirect to the "show" route for the new user.
-            res.writeHead(302, { 'Location': `/users/${user.id}` });
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${user.id}` });
             res.end();
         }
     }
@@ -135,9 +135,8 @@ class AssignmentSchedulerController {
         
     }
 
-    async indexUser(req, res) {
-        let users = await AssignmentSchedulerDB.allUsers();
-        res.render('userLogin', { users: users });
+    async showUserLogin(req, res) {
+        res.render('userLogin', {user: new User()});
     }
 
     // TODO
@@ -180,4 +179,4 @@ class AssignmentSchedulerController {
 
 }
 
-module.exports = AssignmentController;
+module.exports = AssignmentSchedulerController;

@@ -3,10 +3,10 @@
 
 <h1>Assignment Scheduler</h1>
 <h2>Login</h2>
-<form action="/assignments" accept-charset="UTF-8" method="post">
+<form action="/assignment-scheduler/login" accept-charset="UTF-8" method="post">
     <div class="field">
         <label for="user_email">Email</label>
-        <input type="text" name="user[email]" id="email" value="<%= user.email %>">
+        <input type="text" name="user[email]" required id="email" value="<%= user.email %>">
     </div>
 
     <div class="padding">
@@ -19,7 +19,7 @@
 
     <div class=" field ">
         <label for="user_password ">Password</label>
-        <input type="text" name="user[password]" id="password" value="<%= user.password %>">
+        <input type="text" name="user[password]" required id="password" value="<%= user.password %>">
     </div>
 
     <div class="padding"></div>
@@ -31,4 +31,4 @@
     </div>
 </form>
 
-<a href="/user/new">Sign Up</a>
+<a href="/assignment-scheduler/signup">Sign Up</a>

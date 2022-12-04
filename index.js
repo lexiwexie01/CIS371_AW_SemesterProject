@@ -13,52 +13,62 @@ const port = 3000
 
 app.set('view engine', 'ejs');
 
-/* Parse the request body if there is POST data */
 app.use(bodyParser.urlencoded({ extended: true }));
 
-/* Display all users */
-app.get('/users', (req, res) => {
-    userController.index(req, res);
+/* Display login page */
+app.get('/assignment-scheduler/login', (req, res) => {
+    assignmentSchedulerController.showUserLogin(req, res);
 });
 
+app.post('assignment-scheduler/login', (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+    res.send(`Username: ${email} Password: ${password}`);
+  });
+
 /* Create a new user from users page*/
-app.post('/users', (req, res) => {
-    userController.create(req, res);
+app.post('/assignment-scheduler/signup', (req, res) => {
+    assignmentSchedulerController.createUser(req, res);
 });
 
 /* Display a form to create a new user */
-app.get('/users/new', (req, res) => {
-    userController.newUser(req, res);
+app.get('/assignment-scheduler/signup', (req, res) => {
+    assignmentSchedulerController.newUser(req, res);
 });
 
 /* Display details for one user */
-app.get('/users/:id', (req, res) => {
-    userController.show(req, res);
+app.get('/assignment-scheduler/:id', (req, res) => {
+    assignmentSchedulerController.showUser(req, res);
 });
 
 /* Edit a user */
-app.get('/users/:id/edit', (req, res) => {
-    userController.edit(req, res);
+app.get('/assignment-scheduler/:id/edit', (req, res) => {
+    assignmentSchedulerController.editUser(req, res);
 });
 
 /* Delete a user */
-app.post('/users/:id/delete', (req, res) => {
-    userController.deleteUser(req, res);
+app.post('/assignment-scheduler/:id/delete', (req, res) => {
+    assignmentSchedulerController.deleteUser(req, res);
 });
 
 /* Display a form to delete a user */
-app.get('/users/:id/delete', (req, res) => {
-    userController.delete(req, res);
+app.get('/assignment-scheduler/:id/delete', (req, res) => {
+    assignmentSchedulerController.deleteUserForm(req, res);
 });
 
 /* Update a user */
-app.post('/users/:id', (req, res) => {
-    userController.update(req, res);
+app.post('/assignment-scheduler/:id', (req, res) => {
+    assignmentSchedulerController.updateUser(req, res);
 });
 
 /* Display a user's assignments */
-app.get('/users/:id/assignments', (req, res) => {
-    assignmentController.show(req, res);
+app.get('/assignment-scheduler/:id/assignments', (req, res) => {
+    assignmentSchedulerController.showAssignments(req, res);
+})
+
+/* Display an assignment */
+app.get('/assignment-scheduler/:id/assignments/:id', (req, res) => {
+    assignmentSchedulerController.showAssignment(req, res);
 })
 
 app.listen(port, () => console.log(`Assignment Scheduler app listening on port ${port}!`))
