@@ -15,6 +15,11 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/*---------Views for testing----------*/
+app.get('/userlist', (req, res) => {
+    assignmentSchedulerController.indexUsers(req, res);
+});
+
 /*---------Log in to existing User account----------*/
 
 /* Display login page */

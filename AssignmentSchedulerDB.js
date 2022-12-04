@@ -10,8 +10,9 @@ class AssignmentSchedulerDB {
 
     static initialize() {
         this.db.serialize(() => {
+            this.db.run('DROP TABLE IF EXISTS Users')
             this.db.run('CREATE TABLE IF NOT EXISTS Users (uid INTEGER PRIMARY KEY, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL);');
-            this.db.run('INSERT INTO Users (fname, lname, email, password) VALUES ("Alexis", "Webster", "alexis@web.com", "password");');
+            this.db.run('INSERT INTO Users (fname, lname, email, password) VALUES ("Alexis", "Webster", "alexis@web.com", "$Password1");');
             
             this.db.run('CREATE TABLE IF NOT EXISTS Assignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES Users(uid));');
         });
@@ -39,7 +40,7 @@ class AssignmentSchedulerDB {
                 if (rows.length >= 1) {
                     resolve(new User(rows[0]));
                 } else {
-                    reject(`Id ${uid} not found`);
+                    throw new Error("UId " + uid + "not found");
                 }
             });
         });
@@ -51,7 +52,7 @@ class AssignmentSchedulerDB {
                 if (rows.length >= 1) {
                     resolve(new Assignment(rows[0]));
                 } else {
-                    reject(`Id ${iad} not found`);
+                    throw new Error("AId " + aid + "not found");
                 }
             });
         });

@@ -6,6 +6,12 @@ const AssignmentSchedulerDB = require('./AssignmentSchedulerDB');
 // Base taken from assignment 6
 class AssignmentSchedulerController {
 
+    // For "userlist" page, which is for testing
+    async indexUsers(req, res) {
+        let users = await AssignmentSchedulerDB.allUsers();
+        res.render('userIndex', { users: users });
+    }
+
     newUser(req, res) {
         res.render('userNew', { user: new User() });
     }

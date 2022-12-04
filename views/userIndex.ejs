@@ -1,0 +1,45 @@
+<!-- Alexis Webster 
+Temporary just to view users list
+-->
+
+<html>
+
+<body>
+    <h1>Users</h1>
+
+    <table>
+        <tr>
+            <th>User ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th></th>
+        </tr>
+
+        <% users.forEach( (user) => { %>
+            <tr>
+                <td>
+                    <%= user.uid %>
+                </td>
+                <td>
+                    <%= user.fname %>
+                </td>
+                <td>
+                    <%= user.lname %>
+                </td>
+                <td>
+                    <%= user.email %>
+                </td>
+                <td>
+                    <%= user.password %>
+                </td>
+                <td>
+                    <a href="/assignment-scheduler/login">Back</a>
+                </td>
+                <% }) %>
+            </tr>
+    </table>
+</body>
+
+</html>
