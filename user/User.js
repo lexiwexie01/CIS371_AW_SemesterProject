@@ -24,9 +24,9 @@ class User {
         if (!this.lname || this.lname.length <= 0) {
             this.errors.push("The user must have a last name.");
         }
-        if (!this.email || this.email.length <= 0 || !this.email.match(/^\S+@\S+\.\S+$/)) {
+        /*if (!this.email || this.email.length <= 0 || !this.email.match(/^\S+@\S+\.\S+$/)) {
             this.errors.push("The user must have a valid email.");
-        }
+        } */
 
         for (let i = 0; i < emailUserList.length; i++) {
             if (this.email === emailUserList[i].email && this.uid !== emailUserList[i].uid) {

@@ -8,7 +8,7 @@
     route = "/assignment-scheduler/signup";
   }
 %>
-    <% if (user.errors.length != 0) { %>
+    <% if (!!user.errors) { %>
         <% console.log("Found errors"); console.log(user.errors); %>
             <div>
                 <p>Errors:</p>
