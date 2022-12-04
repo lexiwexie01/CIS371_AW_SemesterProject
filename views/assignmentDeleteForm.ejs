@@ -1,7 +1,7 @@
 <!-- Alexis Webster -->
 
 <% 
-    submitLabel = "Delete User";
+    submitLabel = "Delete Assignment";
 %>
 <html>
 <head>
@@ -20,33 +20,27 @@
 <body>
 
     <form accept-charset="UTF-8" method="post">
-    <h3>Are you sure you want to delete this user?</h3>
+    <h3>Are you sure you want to delete this assignment?</h3>
 
     <div class="padding"></div>
 
-    <span><span class='label'>First Name:</span>
-    <%= user.fname %>
+    <span><span class='label'>ID:</span>
+    <%= assignment.aid %>
         </span><br>
 
         <div class="padding"></div>
 
-        <span><span class='label'>Last Name:</span>
-        <%= user.lname %>
+        <span><span class='label'>Name:</span>
+        <%= assignment.name %>
             </span><br>
 
             <div class="padding"></div>
-
-            <span><span class='label'>Email:</span>
-            <%= user.email %>
-                </span><br>
-
-                <div class="padding"></div>
 
                     <div class="actions">
                         <input type="submit" name="commit" value="<%= submitLabel %>" />
                     </div>
                     <p>
-                        <a href="/assignment-scheduler/:<%= user.uid %>">Back</a>
+                        <a href="/assignment-scheduler/:<%= assignment.userId %>/assignment/:<%= assignment.aid %>">Back</a>
                     </p>
 </form>
 

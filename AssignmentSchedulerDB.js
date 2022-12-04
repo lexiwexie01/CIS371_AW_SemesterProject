@@ -63,7 +63,7 @@ class AssignmentSchedulerDB {
 
     static findAssignment(aid) {
         return new Promise((resolve, reject) => {
-            this.db.get(`SELECT * FROM Assignments WHERE (aid == ${aid})`, (err, rows) => {
+            this.db.get(`SELECT * FROM Assignments WHERE (aid == ${aid})`, (err, result) => {
                 resolve(result);
             });
         });

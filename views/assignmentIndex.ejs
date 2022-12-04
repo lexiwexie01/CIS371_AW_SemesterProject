@@ -24,6 +24,9 @@
                 <td>
                     <%= assignment.userId %>
                 </td>
+                <td>
+                    <a href="/assignment-scheduler/<%= uid %>/assignments/<%= assignment.aid %>">View</a>
+                </td>
                 <% })
             } else {
                 %>No Assignments

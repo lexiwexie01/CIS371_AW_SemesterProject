@@ -44,14 +44,30 @@ app.post('/assignment-scheduler/signup', (req, res) => {
     assignmentSchedulerController.createUser(req, res);
 });
 
+/*---------Display a User----------*/
+
 /* Display details for one user */
 app.get('/assignment-scheduler/:uid', (req, res) => {
     assignmentSchedulerController.showUser(req, res);
 });
 
+/*---------Edit a User----------*/
+
 /* Edit a user */
 app.get('/assignment-scheduler/:uid/edit', (req, res) => {
     assignmentSchedulerController.editUser(req, res);
+});
+
+/* Update a user */
+app.post('/assignment-scheduler/:uid', (req, res) => {
+    assignmentSchedulerController.updateUser(req, res);
+});
+
+/*---------Delete a User----------*/
+
+/* Display a form to delete a user */
+app.get('/assignment-scheduler/:uid/delete', (req, res) => {
+    assignmentSchedulerController.deleteUserForm(req, res);
 });
 
 /* Delete a user */
@@ -59,15 +75,7 @@ app.post('/assignment-scheduler/:uid/delete', (req, res) => {
     assignmentSchedulerController.deleteUser(req, res);
 });
 
-/* Display a form to delete a user */
-app.get('/assignment-scheduler/:uid/delete', (req, res) => {
-    assignmentSchedulerController.deleteUserForm(req, res);
-});
-
-/* Update a user */
-app.post('/assignment-scheduler/:uid', (req, res) => {
-    assignmentSchedulerController.updateUser(req, res);
-});
+/*---------Display assignment(s)----------*/
 
 /* Display a user's assignments */
 app.get('/assignment-scheduler/:uid/assignments', (req, res) => {
@@ -78,5 +86,17 @@ app.get('/assignment-scheduler/:uid/assignments', (req, res) => {
 app.get('/assignment-scheduler/:uid/assignments/:aid', (req, res) => {
     assignmentSchedulerController.showAssignment(req, res);
 })
+
+/*---------Delete Assignment(s)----------*/
+
+/* Display a form to delete an assignment */
+app.get('/assignment-scheduler/:uid/assignments/:aid/delete', (req, res) => {
+    assignmentSchedulerController.deleteAssignmentForm(req, res);
+});
+
+/* Delete a user */
+app.post('/assignment-scheduler/:uid/assignments/:aid/delete', (req, res) => {
+    assignmentSchedulerController.deleteAssignment(req, res);
+});
 
 app.listen(port, () => console.log(`Assignment Scheduler app listening on port ${port}!`))

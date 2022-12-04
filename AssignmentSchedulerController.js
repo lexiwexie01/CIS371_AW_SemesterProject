@@ -139,7 +139,7 @@ class AssignmentSchedulerController {
 
     // TODO
     async updateAssignment(req, res) {
-        
+        AssignmentSchedulerDB.updateAssignment(assignment);
     }
 
     async showUserLogin(req, res) {
@@ -181,7 +181,7 @@ class AssignmentSchedulerController {
         if (!assignment) {
             res.send("Could not find assignment with id of " + aid);
         } else {
-            res.render('assignmentShow', { assignment: assignment });
+            res.render('assignmentView', { assignment: assignment });
         }
     }
 
