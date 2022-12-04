@@ -3,15 +3,17 @@
 var sqlite3 = require('sqlite3').verbose();
 let Assignment = require('./assignment/Assignment');
 let User = require('./user/User');
+let lastUID = 0;
+let lastAID = 0;
 
 class AssignmentSchedulerDB {
 
     static initialize() {
         this.db.serialize(() => {
-            this.db.run('CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL);');
+            this.db.run('CREATE TABLE IF NOT EXISTS Users (uid INTEGER PRIMARY KEY, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL);');
             this.db.run('INSERT INTO Users (fname, lname, email, password) VALUES ("Alexis", "Webster", "alexis@web.com", "password");');
             
-            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (id INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES Users(id));');
+            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES Users(uid));');
         });
     }
 
@@ -31,25 +33,25 @@ class AssignmentSchedulerDB {
         });
     }
 
-    static findUser(id) {
+    static findUser(uid) {
         return new Promise((resolve, reject) => {
-            this.db.all(`SELECT * FROM Users WHERE (id == ${id})`, (err, rows) => {
+            this.db.all(`SELECT * FROM Users WHERE (uid == ${uid})`, (err, rows) => {
                 if (rows.length >= 1) {
                     resolve(new User(rows[0]));
                 } else {
-                    reject(`Id ${id} not found`);
+                    reject(`Id ${uid} not found`);
                 }
             });
         });
     }
 
-    static findAssignment(id) {
+    static findAssignment(aid) {
         return new Promise((resolve, reject) => {
-            this.db.all(`SELECT * FROM Assignments WHERE (id == ${id})`, (err, rows) => {
+            this.db.all(`SELECT * FROM Assignments WHERE (aid == ${aid})`, (err, rows) => {
                 if (rows.length >= 1) {
                     resolve(new Assignment(rows[0]));
                 } else {
-                    reject(`Id ${id} not found`);
+                    reject(`Id ${iad} not found`);
                 }
             });
         });
@@ -61,7 +63,7 @@ class AssignmentSchedulerDB {
             return new Promise((resolve, reject) => {
                 this.db.run(`INSERT INTO Users (fname, lname, email, password) VALUES ("${newUser.fname}", "${newUser.lname}", "${newUser.email}", "${newUser.password}")`,
                     function(err, data) {
-                        newUser.id = this.lastID;
+                        newUser.uid = lastUID + 1;
                         resolve(newUser);
                     });
             });
@@ -76,7 +78,7 @@ class AssignmentSchedulerDB {
             return new Promise((resolve, reject) => {
                 this.db.run(`INSERT INTO Assignments (name, userId) VALUES ("${newAssignment.name}", "${newAssignment.userId}")`,
                     function(err, data) {
-                        newAssignment.id = this.lastID;
+                        newAssignment.aid = lastAID + 1;
                         resolve(newAssignment);
                     });
             });
@@ -87,8 +89,8 @@ class AssignmentSchedulerDB {
 
     static deleteUser(user) {
         return new Promise((resolve, reject) => {
-            this.db.run(`DELETE FROM Users WHERE id="${user.id}"`, function(err, data) {
-                user.pk = this.lastID;
+            this.db.run(`DELETE FROM Users WHERE id="${user.uid}"`, function(err, data) {
+                user.pk = lastUID;
                 resolve(user)
             })
         })
@@ -96,19 +98,19 @@ class AssignmentSchedulerDB {
 
     static deleteAssignment(assignment) {
         return new Promise((resolve, reject) => {
-            this.db.run(`DELETE FROM Assignments WHERE id="${assignment.id}"`, function(err, data) {
-                assignment.pk = this.lastID;
+            this.db.run(`DELETE FROM Assignments WHERE id="${assignment.aid}"`, function(err, data) {
+                assignment.pk = lastAID;
                 resolve(assignment)
             })
         })
     }
 
     static updateUser(user) {
-        this.db.run(`UPDATE Users SET fname="${user.fname}", lname="${user.lname}", email="${user.email}", password="${user.password}" WHERE id="${user.id}"`);
+        this.db.run(`UPDATE Users SET fname="${user.fname}", lname="${user.lname}", email="${user.email}", password="${user.password}" WHERE id="${user.uid}"`);
     }
 
     static updateAssignment(assignment) {
-        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}" WHERE id="${assignment.id}"`);
+        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}" WHERE id="${assignment.aid}"`);
     }
 }
 

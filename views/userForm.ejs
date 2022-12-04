@@ -1,11 +1,11 @@
 <!-- Alexis Webster -->
 <% 
-  if (user.id) {
+  if (user.uid) {
     submitLabel = "Update User";
-    route = `/users/${user.id}`;
+    route = `/assignment-scheduler/${user.uid}`;
   } else {
     submitLabel = "Create User";
-    route = "/users";
+    route = "/assignment-scheduler/signup";
   }
 %>
     <% if (user.errors.length > 0) { %>

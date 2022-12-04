@@ -5,7 +5,7 @@ class User {
     constructor(description) {
         // thumbnail can be blank.
         if (description) {
-            this.id = description.id;
+            this.uid = description.uid;
             this.fname = description.fname;
             this.lname = description.lname;
             this.email = description.email;
@@ -29,10 +29,10 @@ class User {
         }
 
         for (let i = 0; i < emailUserList.length; i++) {
-            if (this.email === emailUserList[i].email && this.id !== emailUserList[i].id) {
+            if (this.email === emailUserList[i].email && this.uid !== emailUserList[i].uid) {
                 this.errors.push("The email must be unique.");
             }
-            if (update && this.id === emailUserList[i].id) {
+            if (update && this.uid === emailUserList[i].uid) {
                 emailUserList[i].email = this.email;
             }
         }
@@ -46,7 +46,7 @@ class User {
 
     removeUser() {
         for (let i = 0; i < emailUserList.length; i++) {
-            if (this.id === emailUserList[i].id) {
+            if (this.uid === emailUserList[i].uid) {
                 emailUserList.splice(i, 1);
             }
         }

@@ -2,7 +2,7 @@ class Assignment {
     constructor(description) {
         // thumbnail can be blank.
         if (description) {
-            this.id = description.id;
+            this.aid = description.aid;
             this.name = description.name;
             this.userId = description.userId;
         }
