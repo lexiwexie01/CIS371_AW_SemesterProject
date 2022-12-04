@@ -131,7 +131,6 @@ class AssignmentSchedulerController {
 
             console.log("About to call update");
 
-            // Send a redirect to the "show" route for the new user.
             res.writeHead(302, { 'Location': `/assignment-scheduler/${user.uid}` });
             res.end();
         }
@@ -146,9 +145,11 @@ class AssignmentSchedulerController {
         res.render('userLogin', {user: new User()});
     }
 
-    // TODO
     async showAssignments(req, res) {
-        
+        let uid = req.params.uid;
+
+        let assignments = await AssignmentSchedulerDB.userAssignments(uid);
+        res.render('assignmentIndex', {assignments: assignments});
     }
 
     async rawUserIndex(req, res) {

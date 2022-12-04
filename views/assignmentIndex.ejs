@@ -1,2 +1,35 @@
 <!-- Alexis Webster -->
 
+<html>
+
+<body>
+    <h1>Assignments</h1>
+
+    <table>
+        <tr>
+            <th>AID</th>
+            <th>Name</th>
+            <th>User ID</th>
+            <th></th>
+        </tr>
+
+        <% assignments.forEach( (assignment) => { %>
+            <tr>
+                <td>
+                    <%= assignment.aid %>
+                </td>
+                <td>
+                    <%= assigment.name %>
+                </td>
+                <td>
+                    <%= assignment.userId %>
+                </td>
+                <td>
+                    <a href="/assignment-scheduler/<%= assignment.userId %>">Back</a>
+                </td>
+                <% }) %>
+            </tr>
+    </table>
+</body>
+
+</html>
