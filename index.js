@@ -75,18 +75,6 @@ app.post('/assignment-scheduler/:uid/delete', (req, res) => {
     assignmentSchedulerController.deleteUser(req, res);
 });
 
-/*---------Display assignment(s)----------*/
-
-/* Display a user's assignments */
-app.get('/assignment-scheduler/:uid/assignments', (req, res) => {
-    assignmentSchedulerController.showAssignments(req, res);
-})
-
-/* Display an assignment */
-app.get('/assignment-scheduler/:uid/assignments/:aid', (req, res) => {
-    assignmentSchedulerController.showAssignment(req, res);
-})
-
 /*---------Create a new assignment----------*/
 
 /* Display a form to create a new assignment */
@@ -98,6 +86,18 @@ app.get('/assignment-scheduler/:uid/assignments/new', (req, res) => {
 app.post('/assignment-scheduler/:uid/assignments/new', (req, res) => {
     assignmentSchedulerController.createAssignment(req, res);
 });
+
+/*---------Display assignment(s)----------*/
+
+/* Display a user's assignments */
+app.get('/assignment-scheduler/:uid/assignments', (req, res) => {
+    assignmentSchedulerController.showAssignments(req, res);
+})
+
+/* Display an assignment */
+app.get('/assignment-scheduler/:uid/assignments/:aid', (req, res) => {
+    assignmentSchedulerController.showAssignment(req, res);
+})
 
 /*---------Delete Assignment(s)----------*/
 
