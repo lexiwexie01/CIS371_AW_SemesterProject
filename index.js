@@ -29,10 +29,8 @@ app.get('/assignment-scheduler/login', (req, res) => {
 
 /* Log in to assignment scheduler */
 app.post('assignment-scheduler/login', (req, res) => {
-    let email = req.body.email;
-    let password = req.body.password;
-    res.send(`Username: ${email} Password: ${password}`);
-  });
+    assignmentSchedulerController.showUser(req, res);
+});
 
 /*---------Make a new User----------*/
 
