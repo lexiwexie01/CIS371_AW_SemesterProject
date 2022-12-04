@@ -130,6 +130,7 @@ class AssignmentSchedulerController {
             user.password = req.body.user.password;
 
             console.log("About to call update");
+            AssignmentSchedulerDB.updateUser(user);
 
             res.writeHead(302, { 'Location': `/assignment-scheduler/${user.uid}` });
             res.end();
