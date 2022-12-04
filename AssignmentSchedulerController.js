@@ -74,7 +74,7 @@ class AssignmentSchedulerController {
 
     async deleteUserForm(req, res) {
         let uid = req.params.uid;
-        let user = await AssignmentSchedulerDB.find(uid);
+        let user = await AssignmentSchedulerDB.findUser(uid);
 
         if (!user) {
             res.send("Could not find user with id of " + uid);
@@ -102,8 +102,7 @@ class AssignmentSchedulerController {
             res.send("Could not find user with id of " + uid);
         } else {
             AssignmentSchedulerDB.deleteUser(user);
-            let users = await AssignmentSchedulerDB.allUsers();
-            res.render('userLogin', { users: users });
+            res.render('userLogin', { user: new User() });
         }
     }
 

@@ -90,8 +90,8 @@ class AssignmentSchedulerDB {
 
     static deleteUser(user) {
         return new Promise((resolve, reject) => {
-            this.db.run(`DELETE FROM Users WHERE id="${user.uid}"`, function(err, data) {
-                user.pk = lastUID;
+            this.db.run(`DELETE FROM Users WHERE uid="${user.uid}"`, function(err, data) {
+                user.uid = lastUID;
                 resolve(user)
             })
         })
@@ -99,8 +99,8 @@ class AssignmentSchedulerDB {
 
     static deleteAssignment(assignment) {
         return new Promise((resolve, reject) => {
-            this.db.run(`DELETE FROM Assignments WHERE id="${assignment.aid}"`, function(err, data) {
-                assignment.pk = lastAID;
+            this.db.run(`DELETE FROM Assignments WHERE aid="${assignment.aid}"`, function(err, data) {
+                assignment.uid = lastAID;
                 resolve(assignment)
             })
         })
