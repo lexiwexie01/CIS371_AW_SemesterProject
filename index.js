@@ -87,6 +87,18 @@ app.get('/assignment-scheduler/:uid/assignments/:aid', (req, res) => {
     assignmentSchedulerController.showAssignment(req, res);
 })
 
+/*---------Create a new assignment----------*/
+
+/* Display a form to create a new assignment */
+app.get('/assignment-scheduler/:uid/assignments/new', (req, res) => {
+    assignmentSchedulerController.newAssignment(req, res);
+});
+
+/* Create a new assignment from assignments page*/
+app.post('/assignment-scheduler/:uid/assignments/new', (req, res) => {
+    assignmentSchedulerController.createAssignment(req, res);
+});
+
 /*---------Delete Assignment(s)----------*/
 
 /* Display a form to delete an assignment */
@@ -97,6 +109,18 @@ app.get('/assignment-scheduler/:uid/assignments/:aid/delete', (req, res) => {
 /* Delete a user */
 app.post('/assignment-scheduler/:uid/assignments/:aid/delete', (req, res) => {
     assignmentSchedulerController.deleteAssignment(req, res);
+});
+
+/*---------Edit an assignment----------*/
+
+/* Edit an assignment */
+app.get('/assignment-scheduler/:uid/assignments/:aid/edit', (req, res) => {
+    assignmentSchedulerController.editAssignment(req, res);
+});
+
+/* Update an assignment */
+app.post('/assignment-scheduler/:uid/assignments/edit', (req, res) => {
+    assignmentSchedulerController.updateAssignment(req, res);
 });
 
 app.listen(port, () => console.log(`Assignment Scheduler app listening on port ${port}!`))

@@ -16,9 +16,9 @@ class AssignmentSchedulerController {
         res.render('userNew', { user: new User() });
     }
 
-    // TODO
     newAssignment(req, res) {
-        res.render('assignmentNew', {assignment: new Assignment()});
+        let uid = req.params.uid;
+        res.render('assignmentNew', {assignment: new Assignment(), uid: uid});
     }
 
     async createUser(req, res) {
@@ -106,9 +106,16 @@ class AssignmentSchedulerController {
         }
     }
 
-    // TODO
     async deleteAssignment(req, res) {
-        
+        let aid = req.params.aid;
+        let assignment = await AssignmentSchedulerDB.findAssignment(aid);
+
+        if (!assignment) {
+            assignment.send("Could not find assignment with id of " + aid);
+        } else {
+            AssignmentSchedulerDB.deleteAssignment(assignment);
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${assignment.userId}/assignments` });
+        }
     }
 
     async updateUser(req, res) {
