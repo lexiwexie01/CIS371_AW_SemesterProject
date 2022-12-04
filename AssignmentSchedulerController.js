@@ -128,6 +128,7 @@ class AssignmentSchedulerController {
             user.fname = req.body.user.fname;
             user.lname = req.body.user.lname;
             user.email = req.body.user.email;
+            user.password = req.body.user.password;
 
             console.log("About to call update");
 
@@ -147,7 +148,7 @@ class AssignmentSchedulerController {
     }
 
     // TODO
-    async indexAssignment(req, res) {
+    async showAssignments(req, res) {
         
     }
 

@@ -60,7 +60,7 @@ class AssignmentSchedulerDB {
 
     static createUser(description) {
         let newUser = new User(description);
-        if (newUser.isValid()) {
+        if (newUser.isValid(false)) {
             return new Promise((resolve, reject) => {
                 this.db.run(`INSERT INTO Users (fname, lname, email, password) VALUES ("${newUser.fname}", "${newUser.lname}", "${newUser.email}", "${newUser.password}")`,
                     function(err, data) {
@@ -75,7 +75,7 @@ class AssignmentSchedulerDB {
 
     static createAssignment(description) {
         let newAssignment = new Assignment(description);
-        if (newAssignment.isValid()) {
+        if (newAssignment.isValid(false)) {
             return new Promise((resolve, reject) => {
                 this.db.run(`INSERT INTO Assignments (name, userId) VALUES ("${newAssignment.name}", "${newAssignment.userId}")`,
                     function(err, data) {
@@ -107,11 +107,11 @@ class AssignmentSchedulerDB {
     }
 
     static updateUser(user) {
-        this.db.run(`UPDATE Users SET fname="${user.fname}", lname="${user.lname}", email="${user.email}", password="${user.password}" WHERE id="${user.uid}"`);
+        this.db.run(`UPDATE Users SET fname="${user.fname}", lname="${user.lname}", email="${user.email}", password="${user.password}" WHERE uid="${user.uid}"`);
     }
 
     static updateAssignment(assignment) {
-        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}" WHERE id="${assignment.aid}"`);
+        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}" WHERE aid="${assignment.aid}"`);
     }
 }
 
