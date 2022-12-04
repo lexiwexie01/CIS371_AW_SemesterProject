@@ -6,30 +6,32 @@
     <h1>Assignments</h1>
 
     <table>
-        <tr>
-            <th>AID</th>
-            <th>Name</th>
-            <th>User ID</th>
-            <th></th>
-        </tr>
-
-        <% assignments.forEach( (assignment) => { %>
+        <% if (assignments.length != 0) { %>
+            <tr>
+                <th>AID</th>
+                <th>Name</th>
+                <th>User ID</th>
+                <th></th>
+            </tr>
+                <% assignments.forEach( (assignment) => { %>
             <tr>
                 <td>
                     <%= assignment.aid %>
                 </td>
                 <td>
-                    <%= assigment.name %>
+                    <%= assignment.name %>
                 </td>
                 <td>
                     <%= assignment.userId %>
                 </td>
-                <td>
-                    <a href="/assignment-scheduler/<%= assignment.userId %>">Back</a>
-                </td>
-                <% }) %>
+                <% })
+            } else {
+                %>No Assignments
+            <%} %>
             </tr>
     </table>
+
+    <a href="/assignment-scheduler/<%= uid %>">Back</a>
 </body>
 
 </html>

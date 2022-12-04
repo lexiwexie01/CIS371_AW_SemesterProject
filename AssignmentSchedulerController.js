@@ -149,7 +149,7 @@ class AssignmentSchedulerController {
         let uid = req.params.uid;
 
         let assignments = await AssignmentSchedulerDB.userAssignments(uid);
-        res.render('assignmentIndex', {assignments: assignments});
+        res.render('assignmentIndex', {assignments: assignments, uid: uid});
     }
 
     async rawUserIndex(req, res) {
