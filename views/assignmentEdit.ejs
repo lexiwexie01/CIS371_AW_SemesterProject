@@ -15,6 +15,6 @@
 
     <%- include('assignmentForm') %>
 
-        <a href="/assignment-scheduler/<%= assignment.userId %>/assignments/<%= assignment.aid %>">Back</a>
+        <a href="/assignment-scheduler/<%=req.params.uid %>/assignments/<%= assignment.aid %>">Back</a>
 
 </html>

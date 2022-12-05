@@ -2,22 +2,12 @@
 <% 
   if (assignment.aid) {
     submitLabel = "Update Assignment";
-    route = `/assignment-scheduler/${assignment.userId}/assignments/${assignment.aid}`;
+    route = `/assignment-scheduler/${req.params.uid}/assignments/${assignment.aid}`;
   } else {
     submitLabel = "Create Assignment";
-    route = `/assignment-scheduler/${user.uid}/assignments/new}`;
+    route = `/assignment-scheduler/${req.params.uid}/assignments/new}`;
   }
 %>
-    <% if (!!assignment.errors) { %>
-        <% console.log("Found errors"); console.log(assignment.errors); %>
-            <div>
-                <p>Errors:</p>
-                <ul>
-                    <%- assignment.errors.map((item) => `<li>${item}</li>` ).join("\n"); %>
-                </ul>
-            </div>
-            <% } %>
-
                     <div class=" field ">
                         <label for="assignment_name ">Name</label>
                         <input type="text" name="assignment[name]" id="name" value="<%= assignment.name %>">

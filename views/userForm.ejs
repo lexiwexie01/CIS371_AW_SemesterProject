@@ -8,16 +8,6 @@
     route = "/assignment-scheduler/signup";
   }
 %>
-    <% if (!!user.errors) { %>
-        <% console.log("Found errors"); console.log(user.errors); %>
-            <div>
-                <p>Errors:</p>
-                <ul>
-                    <%- user.errors.map((item) => `<li>${item}</li>` ).join("\n"); %>
-                </ul>
-            </div>
-            <% } %>
-
                 <form action="<%=route%>" accept-charset="UTF-8" method="post">
                     <div class="field">
                         <label for="user_fname">First Name</label>

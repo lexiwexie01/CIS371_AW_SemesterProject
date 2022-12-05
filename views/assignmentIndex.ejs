@@ -25,7 +25,7 @@
                     <%= assignment.userId %>
                 </td>
                 <td>
-                    <a href="/assignment-scheduler/<%= user.uid %>/assignments/<%= assignment.aid %>">View</a>
+                    <a href="/assignment-scheduler/<%= req.params.uid %>/assignments/<%= assignment.aid %>">View</a>
                 </td>
                 <% })
             } else {
@@ -34,8 +34,8 @@
             </tr>
     </table>
 
-    <a href="/assignment-scheduler/<%= user.uid %>">Back</a>
-    <a href="/assignment-scheduler/<%= user.uid %>/assignments/new">Create New Assignment</a>
+    <a href="/assignment-scheduler/<%= req.params.uid %>">Back</a>
+    <a href="/assignment-scheduler/<%= req.params.uid %>/assignments/new">Create New Assignment</a>
 </body>
 
 </html>

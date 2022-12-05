@@ -84,11 +84,11 @@ class AssignmentSchedulerDB {
         }
     }
 
-    static createAssignment(description) {
+    static createAssignment(description, user) {
         let newAssignment = new Assignment(description);
         if (newAssignment.isValid(false)) {
             return new Promise((resolve, reject) => {
-                this.db.run(`INSERT INTO Assignments (name, userId) VALUES ("${newAssignment.name}", "${newAssignment.userId}")`,
+                this.db.run(`INSERT INTO Assignments (name, userId) VALUES ("${newAssignment.name}", "${user.uid}")`,
                     function(err, data) {
                         newAssignment.aid = lastAID + 1;
                         resolve(newAssignment);
