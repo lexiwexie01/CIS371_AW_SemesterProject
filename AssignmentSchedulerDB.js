@@ -111,7 +111,7 @@ class AssignmentSchedulerDB {
     static deleteAssignment(assignment) {
         return new Promise((resolve, reject) => {
             this.db.run(`DELETE FROM Assignments WHERE aid="${assignment.aid}"`, function(err, data) {
-                assignment.uid = lastAID;
+                assignment.aid = lastAID;
                 resolve(assignment)
             })
         })

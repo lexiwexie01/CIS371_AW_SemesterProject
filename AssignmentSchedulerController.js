@@ -16,9 +16,11 @@ class AssignmentSchedulerController {
         res.render('userNew', { user: new User() });
     }
 
-    newAssignment(req, res) {
+    async newAssignment(req, res) {
         let uid = req.params.uid;
-        res.render('assignmentNew', {assignment: new Assignment(), uid: uid});
+        let user = await AssignmentSchedulerDB.findUser(uid);
+
+        res.render('assignmentNew', {assignment: new Assignment(), user: user});
     }
 
     async createUser(req, res) {
@@ -38,15 +40,16 @@ class AssignmentSchedulerController {
     async createAssignment(req, res) {
         console.log("About to create new assignment");
         console.log(req.body);
+        let uid = req.params.uid;
         let latestAssignment = await AssignmentSchedulerDB.createAssignment(req.body.assignment);
-        let user = await AssignmentSchedulerDB.findUser()
+        let user = await AssignmentSchedulerDB.findUser(uid);
 
         if (latestAssignment.isValid(false)) {
 
-            res.writeHead(302, { 'Location': `/assignment-scheduler/${latestUser.uid}/assignments/${latestAssignment.aid}` });
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${user.uid}/assignments/${latestAssignment.aid}` });
             res.end();
         } else {
-            res.render('assignmentNew', { assignment: latestAssignment });
+            res.render('assignmentNew', { assignment: latestAssignment, user: user });
         }
     }
 
@@ -155,9 +158,10 @@ class AssignmentSchedulerController {
 
     async showAssignments(req, res) {
         let uid = req.params.uid;
+        let user = await AssignmentSchedulerDB.findUser(uid);
 
         let assignments = await AssignmentSchedulerDB.userAssignments(uid);
-        res.render('assignmentIndex', {assignments: assignments, uid: uid});
+        res.render('assignmentIndex', {assignments: assignments, user: user});
     }
 
     async rawUserIndex(req, res) {
