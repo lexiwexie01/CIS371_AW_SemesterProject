@@ -15,13 +15,57 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/*---------Open the guest planner page----------*/
+app.get('/assignment-scheduler/guest', (req, res) => {
+    assignmentSchedulerController.showGuestAssignments(req, res);
+});
+
+/*---------Make a guest assignment----------*/
+/* Display a form to create a new guest assignment */
+app.get('/assignment-scheduler/guest', (req, res) => {
+    assignmentSchedulerController.newGuestAssignment(req, res);
+});
+
+/* Create a new guest assignment from guest planner page*/
+app.post('/assignment-scheduler/guest', (req, res) => {
+    assignmentSchedulerController.createGuestAssignment(req, res);
+});
+
+/*---------Display a guest assignment----------*/
+/* Display details for one user */
+app.get('/assignment-scheduler/guest/:aid', (req, res) => {
+    assignmentSchedulerController.showGuestAssignment(req, res);
+});
+
+/*---------Edit a guest assignment----------*/
+/* Edit a guest assignment */
+app.get('/assignment-scheduler/guest/:aid/edit', (req, res) => {
+    assignmentSchedulerController.editGuestAssignment(req, res);
+});
+
+/* Update a guest assignment */
+app.post('/assignment-scheduler/guest/:aid', (req, res) => {
+    assignmentSchedulerController.updateGuestAssignment(req, res);
+});
+
+/*---------Delete a guest assignment----------*/
+/* Display a form to delete a guest assignment */
+app.get('/assignment-scheduler/guest/:aid/delete', (req, res) => {
+    assignmentSchedulerController.deleteGuestAssignmentForm(req, res);
+});
+
+/* Delete a guest assignment */
+app.post('/assignment-scheduler/guest/:aid/delete', (req, res) => {
+    assignmentSchedulerController.deleteGuestAssignment(req, res);
+});
+
+
 /*---------Views for testing----------*/
 app.get('/userlist', (req, res) => {
     assignmentSchedulerController.indexUsers(req, res);
 });
 
 /*---------Log in to existing User account----------*/
-
 /* Display login page */
 app.get('/assignment-scheduler/login', (req, res) => {
     assignmentSchedulerController.showUserLogin(req, res);
@@ -33,7 +77,6 @@ app.post('assignment-scheduler/login', (req, res) => {
 });
 
 /*---------Make a new User----------*/
-
 /* Display a form to create a new user */
 app.get('/assignment-scheduler/signup', (req, res) => {
     assignmentSchedulerController.newUser(req, res);
@@ -45,14 +88,12 @@ app.post('/assignment-scheduler/signup', (req, res) => {
 });
 
 /*---------Display a User----------*/
-
 /* Display details for one user */
 app.get('/assignment-scheduler/:uid', (req, res) => {
     assignmentSchedulerController.showUser(req, res);
 });
 
 /*---------Edit a User----------*/
-
 /* Edit a user */
 app.get('/assignment-scheduler/:uid/edit', (req, res) => {
     assignmentSchedulerController.editUser(req, res);
