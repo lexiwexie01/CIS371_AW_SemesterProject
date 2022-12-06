@@ -3,7 +3,6 @@ let emailUserList = [];
 // Base of this model taken from assignment 6.
 class User {
     constructor(description) {
-        // thumbnail can be blank.
         if (description) {
             this.uid = description.uid;
             this.fname = description.fname;

@@ -1,6 +1,5 @@
 class Assignment {
     constructor(description) {
-        // thumbnail can be blank.
         if (description) {
             this.aid = description.aid;
             this.name = description.name;
