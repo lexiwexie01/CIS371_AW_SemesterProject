@@ -22,12 +22,12 @@ app.get('/assignment-scheduler/guest', (req, res) => {
 
 /*---------Make a guest assignment----------*/
 /* Display a form to create a new guest assignment */
-app.get('/assignment-scheduler/guest', (req, res) => {
+app.get('/assignment-scheduler/guest/new', (req, res) => {
     assignmentSchedulerController.newGuestAssignment(req, res);
 });
 
 /* Create a new guest assignment from guest planner page*/
-app.post('/assignment-scheduler/guest', (req, res) => {
+app.post('/assignment-scheduler/guest/new', (req, res) => {
     assignmentSchedulerController.createGuestAssignment(req, res);
 });
 
@@ -73,7 +73,7 @@ app.get('/assignment-scheduler/login', (req, res) => {
 
 /* Log in to assignment scheduler */
 app.post('assignment-scheduler/login', (req, res) => {
-    assignmentSchedulerController.showUser(req, res);
+    assignmentSchedulerController.logInUser(req, res);
 });
 
 /*---------Make a new User----------*/

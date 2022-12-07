@@ -13,6 +13,7 @@ class AssignmentSchedulerDB {
         this.db.serialize(() => {
             this.db.run('DROP TABLE IF EXISTS Users')
             this.db.run('DROP TABLE IF EXISTS Assignments')
+            this.db.run('DROP TABLE IF EXISTS GuestAssignments')
 
             this.db.run('CREATE TABLE IF NOT EXISTS Users (uid INTEGER PRIMARY KEY, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL);');
             this.db.run('INSERT INTO Users (uid, fname, lname, email, password) VALUES ("1", "Alexis", "Webster", "alexis@web.com", "$Password1");');
@@ -52,6 +53,14 @@ class AssignmentSchedulerDB {
     static findUser(uid) {
         return new Promise((resolve, reject) => {
             this.db.get(`SELECT * FROM Users WHERE (uid == ${uid})`, (err, result) => {
+                resolve(result);
+            });
+        });
+    }
+
+    static findUserFromLogin(email, password) {
+        return new Promise((resolve, reject) => {
+            this.db.get(`SELECT * FROM Users WHERE (email == ${email}) AND (password == ${password}`, (err, result) => {
                 resolve(result);
             });
         });

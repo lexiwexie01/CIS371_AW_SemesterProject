@@ -111,6 +111,19 @@ class AssignmentSchedulerController {
         res.render('userLogin', {user: new User()});
     }
 
+    async logInUser(req, res) {
+        let email = req.params.email;
+        let password = req.params.password;
+
+        let user = await AssignmentSchedulerDB.findUserFromLogin(email, password);
+
+        if (!user) {
+            res.send("Could not find user with those credentials.");
+        } else {
+            res.render('userView', { user: user });
+        }
+    }
+
     newUser(req, res) {
         res.render('userNew', { user: new User() });
     }
