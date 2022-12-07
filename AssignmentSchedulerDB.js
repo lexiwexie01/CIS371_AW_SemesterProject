@@ -5,6 +5,7 @@ let Assignment = require('./assignment/Assignment');
 let User = require('./user/User');
 let lastUID = 0;
 let lastAID = 0;
+let lastGuestAID = 0;
 
 class AssignmentSchedulerDB {
 
@@ -25,23 +26,10 @@ class AssignmentSchedulerDB {
             this.db.run('INSERT INTO Assignments (aid, name, userId) VALUES ("3", "Essay", "1");');
             this.db.run('INSERT INTO Assignments (aid, name, userId) VALUES ("4", "Homework", "3");');
 
+            this.db.run('CREATE TABLE IF NOT EXISTS GuestAssignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL);');
+            this.db.run('INSERT INTO GuestAssignments (aid, name) VALUES ("1", "Essay");');
 
-        });
-    }
 
-    static allUsers() {
-        return new Promise((resolve, reject) => {
-            this.db.all('SELECT * FROM Users', (err, response) => {
-                resolve(response.map((item) => new User(item)));
-            });
-        });
-    }
-
-    static allAssignments() {
-        return new Promise((resolve, reject) => {
-            this.db.all('SELECT * FROM Assignments', (err, response) => {
-                resolve(response.map((item) => new Assignment(item)));
-            });
         });
     }
 
@@ -53,17 +41,17 @@ class AssignmentSchedulerDB {
         });
     }
 
-    static findUser(uid) {
+    static allUsers() {
         return new Promise((resolve, reject) => {
-            this.db.get(`SELECT * FROM Users WHERE (uid == ${uid})`, (err, result) => {
-                resolve(result);
+            this.db.all('SELECT * FROM Users', (err, response) => {
+                resolve(response.map((item) => new User(item)));
             });
         });
     }
 
-    static findAssignment(aid) {
+    static findUser(uid) {
         return new Promise((resolve, reject) => {
-            this.db.get(`SELECT * FROM Assignments WHERE (aid == ${aid})`, (err, result) => {
+            this.db.get(`SELECT * FROM Users WHERE (uid == ${uid})`, (err, result) => {
                 resolve(result);
             });
         });
@@ -84,6 +72,35 @@ class AssignmentSchedulerDB {
         }
     }
 
+    static deleteUser(user) {
+        return new Promise((resolve, reject) => {
+            this.db.run(`DELETE FROM Users WHERE uid="${user.uid}"`, function(err, data) {
+                user.uid = lastUID;
+                resolve(user)
+            })
+        })
+    }
+
+    static updateUser(user) {
+        this.db.run(`UPDATE Users SET fname="${user.fname}", lname="${user.lname}", email="${user.email}", password="${user.password}" WHERE uid="${user.uid}"`);
+    }
+
+    static allAssignments() {
+        return new Promise((resolve, reject) => {
+            this.db.all('SELECT * FROM Assignments', (err, response) => {
+                resolve(response.map((item) => new Assignment(item)));
+            });
+        });
+    }
+
+    static findAssignment(aid) {
+        return new Promise((resolve, reject) => {
+            this.db.get(`SELECT * FROM Assignments WHERE (aid == ${aid})`, (err, result) => {
+                resolve(result);
+            });
+        });
+    }
+
     static createAssignment(description, user) {
         let newAssignment = new Assignment(description);
         if (newAssignment.isValid(false)) {
@@ -99,15 +116,6 @@ class AssignmentSchedulerDB {
         }
     }
 
-    static deleteUser(user) {
-        return new Promise((resolve, reject) => {
-            this.db.run(`DELETE FROM Users WHERE uid="${user.uid}"`, function(err, data) {
-                user.uid = lastUID;
-                resolve(user)
-            })
-        })
-    }
-
     static deleteAssignment(assignment) {
         return new Promise((resolve, reject) => {
             this.db.run(`DELETE FROM Assignments WHERE aid="${assignment.aid}"`, function(err, data) {
@@ -117,12 +125,52 @@ class AssignmentSchedulerDB {
         })
     }
 
-    static updateUser(user) {
-        this.db.run(`UPDATE Users SET fname="${user.fname}", lname="${user.lname}", email="${user.email}", password="${user.password}" WHERE uid="${user.uid}"`);
-    }
-
     static updateAssignment(assignment) {
         this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}" WHERE aid="${assignment.aid}"`);
+    }
+
+    static allGuestAssignments() {
+        return new Promise((resolve, reject) => {
+            this.db.all('SELECT * FROM GuestAssignments', (err, response) => {
+                resolve(response.map((item) => new Assignment(item)));
+            });
+        });
+    }
+
+    static findGuestAssignment(aid) {
+        return new Promise((resolve, reject) => {
+            this.db.get(`SELECT * FROM GuestAssignments WHERE (aid == ${aid})`, (err, result) => {
+                resolve(result);
+            });
+        });
+    }
+
+    static createGuestAssignment(description) {
+        let newGuestAssignment = new Assignment(description);
+        if (newGuestAssignment.isValid(false)) {
+            return new Promise((resolve, reject) => {
+                this.db.run(`INSERT INTO GuestAssignments (name) VALUES ("${newGuestAssignment.name}")`,
+                    function(err, data) {
+                        newGuestAssignment.aid = lastGuestAID + 1;
+                        resolve(newGuestAssignment);
+                    });
+            });
+        } else {
+            return newGuestAssignment;
+        }
+    }
+
+    static deleteGuestAssignment(assignment) {
+        return new Promise((resolve, reject) => {
+            this.db.run(`DELETE FROM GuestAssignments WHERE aid="${assignment.aid}"`, function(err, data) {
+                assignment.aid = lastGuestAID;
+                resolve(assignment)
+            })
+        })
+    }
+
+    static updateGuestAssignment(assignment) {
+        this.db.run(`UPDATE GuestAssignments SET name="${assignment.name}" WHERE aid="${assignment.aid}"`);
     }
 }
 

@@ -1,0 +1,49 @@
+<!-- Alexis Webster -->
+
+<% 
+    submitLabel = "Delete Guest Assignment";
+%>
+<html>
+<head>
+    <style>
+        .label {
+            display: inline-block;
+            width: 6em;
+            font-weight: bold;
+        }
+        .padding {
+            height: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form accept-charset="UTF-8" method="post">
+    <h3>Are you sure you want to delete this guest assignment?</h3>
+
+    <div class="padding"></div>
+
+    <span><span class='label'>ID:</span>
+    <%= assignment.aid %>
+        </span><br>
+
+        <div class="padding"></div>
+
+        <span><span class='label'>Name:</span>
+        <%= assignment.name %>
+            </span><br>
+
+            <div class="padding"></div>
+
+                    <div class="actions">
+                        <input type="submit" name="commit" value="<%= submitLabel %>" />
+                    </div>
+                    <p>
+                        <a href="/assignment-scheduler/guest/<%= assignment.aid %>">Back</a>
+                    </p>
+</form>
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!-- Alexis Webster -->
+
+<html>
+
+<body>
+    <h1>Guest Assignments</h1>
+
+    <table>
+        <% if (assignments.length != 0) { %>
+            <tr>
+                <th>AID</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+                <% assignments.forEach( (assignment) => { %>
+            <tr>
+                <td>
+                    <%= assignment.aid %>
+                </td>
+                <td>
+                    <%= assignment.name %>
+                </td>
+                <td>
+                    <a href="/assignment-scheduler/guest/<%= assignment.aid %>">View</a>
+                </td>
+                <% })
+            } else {
+                %>No Guest Assignments
+            <%} %>
+            </tr>
+    </table>
+
+    <a href="/assignment-scheduler/login">Back</a>
+    <a href="/assignment-scheduler/guest/new">Create New Guest Assignment</a>
+</body>
+
+</html>

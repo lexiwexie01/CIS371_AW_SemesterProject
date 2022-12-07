@@ -82,6 +82,29 @@ class AssignmentSchedulerController {
         }
     }
 
+    async deleteGuestAssignmentForm(req, res) {
+        let aid = req.params.aid;
+        let assignment = await AssignmentSchedulerDB.findGuestAssignment(aid);
+
+        if (!assignment) {
+            res.send("Could not find guest assignment with id of " + aid);
+        } else {
+            res.render('guestAssignmentDeleteForm', { assignment: assignment });
+        }
+    }
+
+    async deleteGuestAssignment(req, res) {
+        let aid = req.params.aid;
+        let assignment = await AssignmentSchedulerDB.findGuestAssignment(aid);
+
+        if (!assignment) {
+            assignment.send("Could not find guest assignment with id of " + aid);
+        } else {
+            AssignmentSchedulerDB.deleteGuestAssignment(assignment);
+            res.writeHead(302, { 'Location': `/assignment-scheduler/guest` });
+        }
+    }
+
 
     // User functions
     async showUserLogin(req, res) {
