@@ -1,11 +1,11 @@
 <!-- Alexis Webster -->
 <% 
-  route = `/assignment-scheduler/login`;
+  route = `/assignment-scheduler-login`;
 %>
 
 <h1>Assignment Scheduler</h1>
 <h2>Login</h2>
-<form action="<%=route%>" accept-charset="UTF-8" method="get">
+<form action="<%=route%>" accept-charset="UTF-8" method="post">
     <div class="field">
         <label for="email">Email</label>
         <input type="text" name="email" required id="email" value="<%= email %>">

@@ -67,13 +67,13 @@ app.get('/userlist', (req, res) => {
 
 /*---------Log in to existing User account----------*/
 /* Display login page */
-app.get('/assignment-scheduler/login', (req, res) => {
+app.get('/assignment-scheduler-login', (req, res) => {
     console.log("Login page showing from index");
     assignmentSchedulerController.showUserLogin(req, res);
 });
 
 /* Log in to assignment scheduler */
-app.get('assignment-scheduler/login', (req, res) => {
+app.post('assignment-scheduler-login', (req, res) => {
     console.log("Logging in user from index");
     assignmentSchedulerController.logInUser(req, res);
 });
