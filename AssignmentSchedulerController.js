@@ -116,8 +116,11 @@ class AssignmentSchedulerController {
         console.log("Logging in user from controller");
         let email = req.body.email;
         let password = req.body.password;
+        console.log("Email: " + email);
+        console.log("Password: " + password);
 
         let user = await AssignmentSchedulerDB.findUserFromLogin(email, password);
+        console.log("User: "+ user);
 
         if (!user) {
             res.send("Could not find user with those credentials.");
