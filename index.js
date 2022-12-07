@@ -73,7 +73,7 @@ app.get('/assignment-scheduler-login', (req, res) => {
 });
 
 /* Log in to assignment scheduler */
-app.post('assignment-scheduler-login', (req, res) => {
+app.post('/assignment-scheduler-login', (req, res) => {
     console.log("Logging in user from index");
     assignmentSchedulerController.logInUser(req, res);
 });
