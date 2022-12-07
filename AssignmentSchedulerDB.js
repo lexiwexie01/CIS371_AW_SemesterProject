@@ -60,7 +60,7 @@ class AssignmentSchedulerDB {
 
     static findUserFromLogin(email, password) {
         return new Promise((resolve, reject) => {
-            this.db.get(`SELECT * FROM Users WHERE (email == ${email}) AND (password == ${password}`, (err, result) => {
+            this.db.get(`SELECT * FROM Users WHERE (email == ${email}) AND (password == ${password})`, (err, result) => {
                 resolve(result);
             });
         });

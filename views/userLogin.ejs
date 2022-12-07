@@ -1,12 +1,14 @@
 <!-- Alexis Webster -->
-
+<% 
+  route = `/assignment-scheduler/login`;
+%>
 
 <h1>Assignment Scheduler</h1>
 <h2>Login</h2>
-<form action="/assignment-scheduler/login" accept-charset="UTF-8" method="post">
+<form action="<%=route%>" accept-charset="UTF-8" method="get">
     <div class="field">
-        <label for="user_email">Email</label>
-        <input type="text" name="user[email]" required id="email" value="<%= user.email %>">
+        <label for="email">Email</label>
+        <input type="text" name="email" required id="email" value="<%= email %>">
     </div>
 
     <div class="padding">
@@ -18,8 +20,8 @@
     </div>
 
     <div class=" field ">
-        <label for="user_password ">Password</label>
-        <input type="text" name="user[password]" required id="password" value="<%= user.password %>">
+        <label for="password ">Password</label>
+        <input type="text" name="password" required id="password" value="<%= password %>">
     </div>
 
     <div class="padding"></div>

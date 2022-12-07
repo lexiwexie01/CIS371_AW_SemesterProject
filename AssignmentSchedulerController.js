@@ -108,14 +108,17 @@ class AssignmentSchedulerController {
 
     // User functions
     async showUserLogin(req, res) {
-        res.render('userLogin', {user: new User()});
+        console.log("Login page showing from controller");
+        res.render('userLogin', {email: "", password: ""});
     }
 
     async logInUser(req, res) {
-        let email = req.params.email;
-        let password = req.params.password;
+        console.log("Logging in user from controller");
+        let email = req.body.email;
+        let password = req.body.password;
 
         let user = await AssignmentSchedulerDB.findUserFromLogin(email, password);
+        res.render('userView', { user: user });
 
         if (!user) {
             res.send("Could not find user with those credentials.");
@@ -198,7 +201,7 @@ class AssignmentSchedulerController {
             res.send("Could not find user with id of " + uid);
         } else {
             AssignmentSchedulerDB.deleteUser(user);
-            res.render('userLogin', { user: new User() });
+            res.render('userLogin', {email: "", password: ""});
         }
     }
 
