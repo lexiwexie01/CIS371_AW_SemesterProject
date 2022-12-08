@@ -30,7 +30,7 @@ class AssignmentSchedulerController {
 
         if (latestGuestAssignment.isValid(false)) {
 
-            res.writeHead(302, { 'Location': `/assignment-scheduler/${latestGuestAssignment.aid}` });
+            res.writeHead(302, { 'Location': `/assignment-scheduler/guest/${latestGuestAssignment.aid}` });
             res.end();
         } else {
             res.render('guestAssignment/guestAssignmentNew', { assignment: latestGuestAssignment });
@@ -103,6 +103,7 @@ class AssignmentSchedulerController {
         } else {
             AssignmentSchedulerDB.deleteGuestAssignment(assignment);
             res.writeHead(302, { 'Location': `/assignment-scheduler/guest` });
+            res.end();
         }
     }
 
@@ -140,7 +141,6 @@ class AssignmentSchedulerController {
         let latestUser = await AssignmentSchedulerDB.createUser(req.body.user);
 
         if (latestUser.isValid(false)) {
-
             res.writeHead(302, { 'Location': `/assignment-scheduler/${latestUser.uid}` });
             res.end();
         } else {
@@ -205,7 +205,8 @@ class AssignmentSchedulerController {
             res.send("Could not find user with id of " + uid);
         } else {
             AssignmentSchedulerDB.deleteUser(user);
-            res.render('user/userLogin', {email: "", password: ""});
+            res.writeHead(302, { 'Location': `/assignment-scheduler-login` });
+            res.end();
         }
     }
 
