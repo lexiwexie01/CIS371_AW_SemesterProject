@@ -75,7 +75,6 @@ class AssignmentSchedulerDB {
                 this.db.run(`INSERT INTO Users (fname, lname, email, password) VALUES ("${newUser.fname}", "${newUser.lname}", "${newUser.email}", "${newUser.password}")`,
                     function(err, data) {
                         newUser.uid = lastUID + 1;
-                        console.log("new user id db: " + newUser.uid);
                         resolve(newUser);
                     });
             });
