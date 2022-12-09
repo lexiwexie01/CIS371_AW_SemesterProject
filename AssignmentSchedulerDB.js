@@ -21,7 +21,7 @@ class AssignmentSchedulerDB {
             this.db.run('INSERT INTO Users (uid, fname, lname, email, password) VALUES ("3", "George", "Washington", "george@wash.com", "GeorgePass@1");');
             this.db.run('INSERT INTO Users (uid, fname, lname, email, password) VALUES ("4", "Cat", "Dog", "cat@dog.org", "CatDog#4");');
             
-            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, dueDate TEXT NOT NULL, daysTillDue, FOREIGN KEY(userId) REFERENCES Users(uid));');
+            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, dueDate TEXT NOT NULL, FOREIGN KEY(userId) REFERENCES Users(uid));');
             this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("1", "Essay", "1", "2022-12-22");');
             this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("2", "Project", "1", "2022-12-30");');
             this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("3", "Essay", "1", "2022-12-20");');
@@ -116,7 +116,7 @@ class AssignmentSchedulerDB {
         let newAssignment = new Assignment(description);
         if (newAssignment.isValid(false)) {
             return new Promise((resolve, reject) => {
-                this.db.run(`INSERT INTO Assignments (name, userId, dueDate, daysTillDue) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}", "${newAssignment.daysTillDue}")`,
+                this.db.run(`INSERT INTO Assignments (name, userId, dueDate) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}")`,
                     function(err, data) {
                         newAssignment.aid = lastAID + 1;
                         resolve(newAssignment);
@@ -137,7 +137,7 @@ class AssignmentSchedulerDB {
     }
 
     static updateAssignment(assignment) {
-        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}", dueDate="${assignment.dueDate}, daysTillDue="${assignment.daysTillDue}" WHERE aid="${assignment.aid}"`);
+        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}", dueDate="${assignment.dueDate} WHERE aid="${assignment.aid}"`);
     }
 
     static allGuestAssignments() {
