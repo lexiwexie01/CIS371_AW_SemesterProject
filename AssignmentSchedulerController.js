@@ -73,6 +73,7 @@ class AssignmentSchedulerController {
             res.send("Could not find guest assignment with id of " + aid);
         } else {
             assignment.name = req.body.assignment.name;
+            assignment.dueDate = req.body.assignment.dueDate;
             // TODO: Add support for other variables if guest assignment is of another type
 
             console.log("About to call update");
@@ -305,6 +306,7 @@ class AssignmentSchedulerController {
             res.send("Could not find assignment with id of " + aid);
         } else {
             assignment.name = req.body.assignment.name;
+            assignment.dueDate = req.body.assignment.dueDate;
 
             console.log("About to call update");
             AssignmentSchedulerDB.updateAssignment(assignment);

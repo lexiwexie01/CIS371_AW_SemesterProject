@@ -21,14 +21,14 @@ class AssignmentSchedulerDB {
             this.db.run('INSERT INTO Users (uid, fname, lname, email, password) VALUES ("3", "George", "Washington", "george@wash.com", "GeorgePass@1");');
             this.db.run('INSERT INTO Users (uid, fname, lname, email, password) VALUES ("4", "Cat", "Dog", "cat@dog.org", "CatDog#4");');
             
-            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES Users(uid));');
-            this.db.run('INSERT INTO Assignments (aid, name, userId) VALUES ("1", "Essay", "1");');
-            this.db.run('INSERT INTO Assignments (aid, name, userId) VALUES ("2", "Project", "1");');
-            this.db.run('INSERT INTO Assignments (aid, name, userId) VALUES ("3", "Essay", "1");');
-            this.db.run('INSERT INTO Assignments (aid, name, userId) VALUES ("4", "Homework", "3");');
+            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, dueDate TEXT NOT NULL, FOREIGN KEY(userId) REFERENCES Users(uid));');
+            this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("1", "Essay", "1", "2022-12-22");');
+            this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("2", "Project", "1", "2022-12-30");');
+            this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("3", "Essay", "1", "2022-12-20");');
+            this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("4", "Homework", "3", "2022-12-27");');
 
-            this.db.run('CREATE TABLE IF NOT EXISTS GuestAssignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId);');
-            this.db.run('INSERT INTO GuestAssignments (aid, name, userId) VALUES ("1", "Essay", "guest");');
+            this.db.run('CREATE TABLE IF NOT EXISTS GuestAssignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId, dueDate TEXT NOT NULL);');
+            this.db.run('INSERT INTO GuestAssignments (aid, name, userId, dueDate) VALUES ("1", "Essay", "guest", "2022-12-25");');
 
 
         });
@@ -116,7 +116,7 @@ class AssignmentSchedulerDB {
         let newAssignment = new Assignment(description);
         if (newAssignment.isValid(false)) {
             return new Promise((resolve, reject) => {
-                this.db.run(`INSERT INTO Assignments (name, userId) VALUES ("${newAssignment.name}", "${user.uid}")`,
+                this.db.run(`INSERT INTO Assignments (name, userId, dueDate) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}")`,
                     function(err, data) {
                         newAssignment.aid = lastAID + 1;
                         resolve(newAssignment);
@@ -137,7 +137,7 @@ class AssignmentSchedulerDB {
     }
 
     static updateAssignment(assignment) {
-        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}" WHERE aid="${assignment.aid}"`);
+        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}", dueDate="${assignment.dueDate}" WHERE aid="${assignment.aid}"`);
     }
 
     static allGuestAssignments() {
@@ -160,7 +160,7 @@ class AssignmentSchedulerDB {
         let newGuestAssignment = new Assignment(description);
         if (newGuestAssignment.isValid(false)) {
             return new Promise((resolve, reject) => {
-                this.db.run(`INSERT INTO GuestAssignments (name) VALUES ("${newGuestAssignment.name}")`,
+                this.db.run(`INSERT INTO GuestAssignments (name, dueDate) VALUES ("${newGuestAssignment.name}", "${newGuestAssignment.dueDate}")`,
                     function(err, data) {
                         newGuestAssignment.aid = lastGuestAID + 1;
                         newGuestAssignment.userId = "guest";
@@ -182,7 +182,7 @@ class AssignmentSchedulerDB {
     }
 
     static updateGuestAssignment(assignment) {
-        this.db.run(`UPDATE GuestAssignments SET name="${assignment.name}" WHERE aid="${assignment.aid}"`);
+        this.db.run(`UPDATE GuestAssignments SET name="${assignment.name}", dueDate="${assignment.dueDate}" WHERE aid="${assignment.aid}"`);
     }
 }
 

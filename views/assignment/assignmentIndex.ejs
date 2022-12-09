@@ -10,7 +10,7 @@
             <tr>
                 <th>AID</th>
                 <th>Name</th>
-                <th>User ID</th>
+                <th>Due Date</th>
                 <th></th>
             </tr>
                 <% assignments.forEach( (assignment) => { %>
@@ -22,7 +22,7 @@
                     <%= assignment.name %>
                 </td>
                 <td>
-                    <%= assignment.userId %>
+                    <%= assignment.dueDate %>
                 </td>
                 <td>
                     <a href="/assignment-scheduler/<%= req.params.uid %>/assignments/<%= assignment.aid %>">View</a>
