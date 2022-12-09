@@ -14,7 +14,7 @@
 </head>
 
 <body>
-
+<% if (user.loggedIn) { %>
     <div class="padding"></div>
 
     <span><span class='label'>First Name:</span>
@@ -48,6 +48,9 @@
                     <p>
                         <a href="/assignment-scheduler/<%= user.uid %>/delete">Delete Account</a>
                     </p>
+<% } else { %>
+    <div>Please log in.</div>
+<% } %>
 </body>
 
 </html>
