@@ -30,7 +30,7 @@ class AssignmentSchedulerController {
 
         if (latestGuestAssignment.isValid(false)) {
 
-            res.writeHead(302, { 'Location': `/assignment-scheduler/guest/${latestGuestAssignment.aid}` });
+            res.writeHead(302, { 'Location': `/assignment-scheduler/guest` });
             res.end();
         } else {
             res.render('guestAssignment/guestAssignmentNew', { assignment: latestGuestAssignment });
@@ -141,7 +141,9 @@ class AssignmentSchedulerController {
         let latestUser = await AssignmentSchedulerDB.createUser(req.body.user);
 
         if (latestUser.isValid(false)) {
-            res.writeHead(302, { 'Location': `/assignment-scheduler/${latestUser.uid}` });
+
+            // Route back to login page
+            res.writeHead(302, { 'Location': `/assignment-scheduler/login` });
             res.end();
         } else {
             res.render('user/userNew', { user: latestUser });
@@ -244,8 +246,9 @@ class AssignmentSchedulerController {
         let latestAssignment = await AssignmentSchedulerDB.createAssignment(req.body.assignment, user);
 
         if (latestAssignment.isValid(false)) {
-
-            res.writeHead(302, { 'Location': `/assignment-scheduler/${user.uid}/assignments/${latestAssignment.aid}` });
+            
+            // Back to assignment list
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${user.uid}/assignments` });
             res.end();
         } else {
             res.render('assignment/assignmentNew', { assignment: latestAssignment, user: user, req: req });

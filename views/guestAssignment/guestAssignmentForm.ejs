@@ -5,9 +5,10 @@
     route = `/assignment-scheduler/guest/${assignment.aid}`;
   } else {
     submitLabel = "Create Guest Assignment";
-    route = `/assignment-scheduler/guest/new}`;
+    route = `/assignment-scheduler/guest/new`;
   }
 %>
+                <form name="guestAssignmentForm" action="<%=route%>" accept-charset="UTF-8" method="post">
                     <div class=" field ">
                         <label for="assignment_name ">Name</label>
                         <input type="text" name="assignment[name]" id="name" value="<%= assignment.name %>" required>

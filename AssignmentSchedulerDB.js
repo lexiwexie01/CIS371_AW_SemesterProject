@@ -27,8 +27,8 @@ class AssignmentSchedulerDB {
             this.db.run('INSERT INTO Assignments (aid, name, userId) VALUES ("3", "Essay", "1");');
             this.db.run('INSERT INTO Assignments (aid, name, userId) VALUES ("4", "Homework", "3");');
 
-            this.db.run('CREATE TABLE IF NOT EXISTS GuestAssignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL);');
-            this.db.run('INSERT INTO GuestAssignments (aid, name) VALUES ("1", "Essay");');
+            this.db.run('CREATE TABLE IF NOT EXISTS GuestAssignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId);');
+            this.db.run('INSERT INTO GuestAssignments (aid, name, userId) VALUES ("1", "Essay", "guest");');
 
 
         });
@@ -163,6 +163,7 @@ class AssignmentSchedulerDB {
                 this.db.run(`INSERT INTO GuestAssignments (name) VALUES ("${newGuestAssignment.name}")`,
                     function(err, data) {
                         newGuestAssignment.aid = lastGuestAID + 1;
+                        newGuestAssignment.userId = "guest";
                         resolve(newGuestAssignment);
                     });
             });
