@@ -6,4 +6,14 @@ class Reading extends Assignment {
         }
         this.errors = [];
     }
+
+    isValid() {
+        this.errors = [];
+
+        if (!this.page_ranges || this.name.length <= 0) {
+            this.errors.push("The reading assignment must have a page range.");
+        }
+
+        return this.errors.length <= 0;
+    }
 }
