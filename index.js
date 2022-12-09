@@ -162,7 +162,7 @@ app.get('/assignment-scheduler/:uid/assignments/:aid/edit', (req, res) => {
 });
 
 /* Update an assignment */
-app.post('/assignment-scheduler/:uid/assignments/edit', (req, res) => {
+app.post('/assignment-scheduler/:uid/assignments/:aid', (req, res) => {
     assignmentSchedulerController.updateAssignment(req, res);
 });
 

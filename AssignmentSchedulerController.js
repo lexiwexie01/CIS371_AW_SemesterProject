@@ -64,7 +64,7 @@ class AssignmentSchedulerController {
         let assignment = await AssignmentSchedulerDB.findGuestAssignment(aid);
 
         let testGuestAssignment = new Assignment(req.body.assignment);
-        if (!testGuestAssignment.isValid(true)) {
+        if (!testGuestAssignment.isValid()) {
             testGuestAssignment.aid = assignment.aid;
             res.render('guestAssignment/assignmentEdit', { assignment: testGuestAssignment });
             return;
@@ -296,7 +296,7 @@ class AssignmentSchedulerController {
         let assignment = await AssignmentSchedulerDB.findAssignment(aid);
 
         let testAssignment = new Assignment(req.body.assignment);
-        if (!testAssignment.isValid(true)) {
+        if (!testAssignment.isValid()) {
             testAssignment.aid = assignment.aid;
             res.render('assignment/assignmentEdit', { assignment: testAssignment, user: user, req: req });
             return;
