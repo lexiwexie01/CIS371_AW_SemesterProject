@@ -121,7 +121,8 @@ class AssignmentSchedulerController {
         let password = req.body.password;
 
         let user = await AssignmentSchedulerDB.findUserFromLogin(email, password);
-
+        user.loggedIn = true;
+        
         if (!user) {
             res.send("Could not find user with those credentials.");
         } else {

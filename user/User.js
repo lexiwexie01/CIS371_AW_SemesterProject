@@ -11,6 +11,7 @@ class User {
             this.lname = description.lname;
             this.email = description.email;
             this.password = description.password;
+            this.loggedIn = false;
         }
         emailUserList.push(this);
         this.errors = [];
