@@ -32,7 +32,7 @@ app.post('/assignment-scheduler/guest/new', (req, res) => {
 });
 
 /*---------Display a guest assignment----------*/
-/* Display details for one user */
+/* Display details for one guest assignment */
 app.get('/assignment-scheduler/guest/:aid', (req, res) => {
     assignmentSchedulerController.showGuestAssignment(req, res);
 });
@@ -68,13 +68,11 @@ app.get('/userlist', (req, res) => {
 /*---------Log in to existing User account----------*/
 /* Display login page */
 app.get('/assignment-scheduler-login', (req, res) => {
-    console.log("Login page showing from index");
     assignmentSchedulerController.showUserLogin(req, res);
 });
 
 /* Log in to assignment scheduler */
 app.post('/assignment-scheduler-login', (req, res) => {
-    console.log("Logging in user from index");
     assignmentSchedulerController.logInUser(req, res);
 });
 

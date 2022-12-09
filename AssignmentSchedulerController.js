@@ -4,12 +4,10 @@ const Assignment = require('./assignment/Assignment');
 const User = require('./user/User');
 const AssignmentSchedulerDB = require('./AssignmentSchedulerDB');
 
-// The user that is logged in.
-let currentUid = "";
+
 
 // Base from assignment 6
 class AssignmentSchedulerController {
-
     // For "userlist" page, which is for testing
     async indexUsers(req, res) {
         let users = await AssignmentSchedulerDB.allUsers();
@@ -115,19 +113,14 @@ class AssignmentSchedulerController {
 
     // User functions
     async showUserLogin(req, res) {
-        console.log("Login page showing from controller");
         res.render('user/userLogin', {email: "", password: ""});
     }
 
     async logInUser(req, res) {
-        console.log("Logging in user from controller");
         let email = req.body.email;
         let password = req.body.password;
-        console.log("Email: " + email);
-        console.log("Password: " + password);
 
         let user = await AssignmentSchedulerDB.findUserFromLogin(email, password);
-        console.log("User: "+ user);
 
         if (!user) {
             res.send("Could not find user with those credentials.");
@@ -238,7 +231,6 @@ class AssignmentSchedulerController {
     newAssignment(req, res) {
         let uid = req.params.uid;
         let user = AssignmentSchedulerDB.findUser(uid);
-
         res.render('assignment/assignmentNew', {assignment: new Assignment(), user: user, req: req});
     }
 
@@ -340,7 +332,6 @@ class AssignmentSchedulerController {
         if (!assignment) {
             res.send("Could not find assignment with id of " + aid);
         } else {
-            console.log(assignment.daysTillDue);
             res.render('assignment/assignmentView', { assignment: assignment });
         }
     }
