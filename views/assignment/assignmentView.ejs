@@ -17,6 +17,13 @@
 
 <body>
 
+    <%
+        let today = new Date();
+        let due = new Date(assignment.dueDate);
+        let amtTime = due.getTime() - today.getTime();
+        let daysTillDue = Math.ceil(amtTime / (1000 * 3600 * 24));
+    %>
+
     <div class="padding"></div>
 
     <span><span class='label'>Assignment ID</span>
@@ -38,7 +45,7 @@
                     <div class="padding"></div>
 
                     <span><span class='label'>Days Left:</span>
-                    <%= assignment.daysTillDue %>
+                    <%= daysTillDue %>
                         </span><br>
 
                     <div class="padding"></div>

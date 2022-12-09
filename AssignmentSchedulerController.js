@@ -340,6 +340,7 @@ class AssignmentSchedulerController {
         if (!assignment) {
             res.send("Could not find assignment with id of " + aid);
         } else {
+            console.log(assignment.daysTillDue);
             res.render('assignment/assignmentView', { assignment: assignment });
         }
     }

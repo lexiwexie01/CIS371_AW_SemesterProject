@@ -7,13 +7,10 @@ class Assignment {
             this.name = description.name;
             this.userId = description.userId;
             this.dueDate = description.dueDate;
+
+            this.daysTillDue = description.daysTillDue;
         }
         this.errors = [];
-
-        let today = new Date();
-        let due = new Date(this.dueDate);
-        let amtTime = due.getTime() - today.getTime();
-        this.daysTillDue = Math.ceil(amtTime / (1000 * 3600 * 24));
     }
 
     isValid() {
@@ -31,4 +28,11 @@ class Assignment {
     }
 
 }
+function getDaysTillDue(dueDate) {
+    let today = new Date();
+    let due = new Date(dueDate);
+    let amtTime = due.getTime() - today.getTime();
+    return Math.ceil(amtTime / (1000 * 3600 * 24));
+}
+
 module.exports = Assignment;
