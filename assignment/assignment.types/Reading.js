@@ -1,3 +1,5 @@
+// Alexis Webster
+
 class Reading extends Assignment {
     constructor(description) {
         if (description) {

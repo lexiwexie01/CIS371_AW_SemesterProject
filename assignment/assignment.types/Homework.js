@@ -1,3 +1,5 @@
+// Alexis Webster
+
 class Homework extends Assignment {
     constructor(description) {
         if (description) {

@@ -1,3 +1,5 @@
+// Alexis Webster
+
 class Presentation extends Assignment {
     constructor(description) {
         if (description) {

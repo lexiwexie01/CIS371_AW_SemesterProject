@@ -1,3 +1,5 @@
+// Alexis Webster
+
 class Essay extends Assignment {
     constructor(description) {
         if (description) {

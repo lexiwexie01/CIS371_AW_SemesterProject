@@ -1,3 +1,5 @@
+// Alexis Webster
+
 class Video extends Assignment {
     constructor(description) {
         if (description) {

@@ -3,6 +3,10 @@
 const Assignment = require('./assignment/Assignment');
 const User = require('./user/User');
 const AssignmentSchedulerDB = require('./AssignmentSchedulerDB');
+
+// The user that is logged in.
+let currentUid = "";
+
 // Base from assignment 6
 class AssignmentSchedulerController {
 

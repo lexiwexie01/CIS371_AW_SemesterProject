@@ -7,25 +7,7 @@
     submitLabel = "Create User";
     route = "/assignment-scheduler/signup";
   }
-  
-  function validateUser() {
-    let fname = document.forms["userForm"]["fname"].value;
-    let lname = document.forms["userForm"]["lname"].value;
-    let email = document.forms["userForm"]["email"].value;
-    let password = document.forms["userForm"]["password"].value;
-    let alert = "";
-
-    if (!user.isValid() || !user.isValid(false)) {
-        for (let error in user.errors) {
-            alert = alert + error + "\n";
-        }
-    }
-    document.getElementById('alert').innerHTML = alert;
-
-  }
-
 %>
-                <div id="alert"></div>
                 <form name="userForm" action="<%=route%>" accept-charset="UTF-8" method="post">
                     <div class="field">
                         <label for="user_fname">First Name</label>

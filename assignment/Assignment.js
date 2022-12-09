@@ -1,3 +1,5 @@
+// Alexis Webster
+
 class Assignment {
     constructor(description) {
         if (description) {
@@ -7,6 +9,11 @@ class Assignment {
             this.dueDate = description.dueDate;
         }
         this.errors = [];
+
+        let today = new Date();
+        let due = new Date(this.dueDate);
+        let amtTime = due.getTime() - today.getTime();
+        this.daysTillDue = Math.ceil(amtTime / (1000 * 3600 * 24));
     }
 
     isValid() {

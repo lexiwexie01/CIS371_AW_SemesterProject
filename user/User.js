@@ -1,3 +1,5 @@
+// Alexis Webster
+
 let emailUserList = [];
 
 // Base of this model taken from assignment 6.
