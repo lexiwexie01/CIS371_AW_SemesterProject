@@ -2,10 +2,10 @@
 // Alexis Webster
 
 const express = require('express')
-const multer = require('multer');
-const upload = multer(); 
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
+const multer = require('multer')
+const upload = multer()
+const session = require('express-session')
+const cookieParser = require('cookie-parser')
 
 const AssignmentSchedulerController = require('./AssignmentSchedulerController');
 const assignmentSchedulerController = new AssignmentSchedulerController();
@@ -22,6 +22,16 @@ app.use(cookieParser());
 app.use(session({secret: "12345"}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+function checkSignIn(req, res, next){
+    if(req.session.user){
+       next();     //If session exists, proceed to page
+    } else {
+       var err = new Error("Not logged in!");
+       console.log(req.session.user);
+       next(err);  //Error, trying to access unauthorized page!
+    }
+ }
 
 /*---------Open the guest planner page----------*/
 app.get('/assignment-scheduler/guest', (req, res) => {
@@ -73,7 +83,7 @@ app.get('/userlist', (req, res) => {
     assignmentSchedulerController.indexUsers(req, res);
 });
 
-/*---------Log in to existing User account----------*/
+/*---------Log in/out to existing User account----------*/
 /* Display login page */
 app.get('/assignment-scheduler-login', (req, res) => {
     assignmentSchedulerController.showUserLogin(req, res);
@@ -83,6 +93,11 @@ app.get('/assignment-scheduler-login', (req, res) => {
 app.post('/assignment-scheduler-login', (req, res) => {
     assignmentSchedulerController.logInUser(req, res);
 });
+
+/* Log out of assignment scheduler */
+app.get('assignment-scheduler/:uid/logout', (req, res) => {
+    assignmentSchedulerController.logOutUser(req, res);
+ });
 
 /*---------Make a new User----------*/
 /* Display a form to create a new user */
@@ -97,7 +112,7 @@ app.post('/assignment-scheduler/signup', (req, res) => {
 
 /*---------Display a User----------*/
 /* Display details for one user */
-app.get('/assignment-scheduler/:uid', (req, res) => {
+app.get('/assignment-scheduler/:uid', checkSignIn, (req, res, next) => {
     assignmentSchedulerController.showUser(req, res);
 });
 

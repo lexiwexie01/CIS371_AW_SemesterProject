@@ -14,7 +14,6 @@
 </head>
 
 <body>
-<% if (user.loggedIn) { %>
     <div class="padding"></div>
 
     <span><span class='label'>First Name:</span>
@@ -53,11 +52,8 @@
                     <div class="padding"></div>
 
                     <p>
-                        <!--Logout button or link-->
+                        <a href="/assignment-scheduler/<%= user.uid %>/logout">Log Out</a>
                     </p>
-<% } else { %>
-    <div>Please log in.</div>
-<% } %>
 </body>
 
 </html>
