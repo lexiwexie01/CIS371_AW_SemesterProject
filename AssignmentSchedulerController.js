@@ -4,7 +4,15 @@ const Assignment = require('./assignment/Assignment');
 const User = require('./user/User');
 const AssignmentSchedulerDB = require('./AssignmentSchedulerDB');
 
-
+function checkSignIn(req, res){
+    if(req.session.user){
+       next();
+    } else {
+       let err = new Error("Not logged in!");
+       console.log(req.session.user);
+       next(err);
+    }
+ }
 
 // Base from assignment 6
 class AssignmentSchedulerController {
@@ -121,8 +129,6 @@ class AssignmentSchedulerController {
         let password = req.body.password;
 
         let user = await AssignmentSchedulerDB.findUserFromLogin(email, password);
-        user.loggedIn = true;
-        console.log(user.loggedIn);
         
         if (!user) {
             res.send("Could not find user with those credentials.");

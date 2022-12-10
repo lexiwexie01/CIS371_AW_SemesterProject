@@ -2,6 +2,10 @@
 // Alexis Webster
 
 const express = require('express')
+const multer = require('multer');
+const upload = multer(); 
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const AssignmentSchedulerController = require('./AssignmentSchedulerController');
 const assignmentSchedulerController = new AssignmentSchedulerController();
@@ -11,7 +15,11 @@ const bodyParser = require('body-parser');
 const app = express()
 const port = 3000
 
+app.use(bodyParser.json());
 app.set('view engine', 'ejs');
+app.use(upload.array());
+app.use(cookieParser());
+app.use(session({secret: "12345"}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
