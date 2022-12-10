@@ -150,7 +150,7 @@ class AssignmentSchedulerController {
         if (latestUser.isValid(false)) {
 
             // Route back to login page
-            res.writeHead(302, { 'Location': `/assignment-scheduler/login` });
+            res.writeHead(302, { 'Location': `/assignment-scheduler-login` });
             res.end();
         } else {
             res.render('user/userNew', { user: latestUser });

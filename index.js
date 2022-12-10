@@ -95,7 +95,7 @@ app.post('/assignment-scheduler-login', (req, res) => {
 });
 
 /* Log out of assignment scheduler */
-app.get('assignment-scheduler/:uid/logout', (req, res) => {
+app.get('/assignment-scheduler/:uid/logout', (req, res) => {
     assignmentSchedulerController.logOutUser(req, res);
  });
 
