@@ -118,7 +118,7 @@ app.get('/assignment-scheduler/:uid', checkSignIn, (req, res, next) => {
 
 /*---------Edit a User----------*/
 /* Edit a user */
-app.get('/assignment-scheduler/:uid/edit', (req, res) => {
+app.get('/assignment-scheduler/:uid/edit', checkSignIn, (req, res, next) => {
     assignmentSchedulerController.editUser(req, res);
 });
 
@@ -130,7 +130,7 @@ app.post('/assignment-scheduler/:uid', (req, res) => {
 /*---------Delete a User----------*/
 
 /* Display a form to delete a user */
-app.get('/assignment-scheduler/:uid/delete', (req, res) => {
+app.get('/assignment-scheduler/:uid/delete', checkSignIn,  (req, res, next) => {
     assignmentSchedulerController.deleteUserForm(req, res);
 });
 
@@ -142,7 +142,7 @@ app.post('/assignment-scheduler/:uid/delete', (req, res) => {
 /*---------Create a new assignment----------*/
 
 /* Display a form to create a new assignment */
-app.get('/assignment-scheduler/:uid/assignments/new', (req, res) => {
+app.get('/assignment-scheduler/:uid/assignments/new', checkSignIn, (req, res, next) => {
     assignmentSchedulerController.newAssignment(req, res);
 });
 
@@ -154,19 +154,19 @@ app.post('/assignment-scheduler/:uid/assignments/new', (req, res) => {
 /*---------Display assignment(s)----------*/
 
 /* Display a user's assignments */
-app.get('/assignment-scheduler/:uid/assignments', (req, res) => {
+app.get('/assignment-scheduler/:uid/assignments', checkSignIn, (req, res, next) => {
     assignmentSchedulerController.showAssignments(req, res);
 })
 
 /* Display an assignment */
-app.get('/assignment-scheduler/:uid/assignments/:aid', (req, res) => {
+app.get('/assignment-scheduler/:uid/assignments/:aid', checkSignIn, (req, res, next) => {
     assignmentSchedulerController.showAssignment(req, res);
 })
 
 /*---------Delete Assignment(s)----------*/
 
 /* Display a form to delete an assignment */
-app.get('/assignment-scheduler/:uid/assignments/:aid/delete', (req, res) => {
+app.get('/assignment-scheduler/:uid/assignments/:aid/delete', checkSignIn, (req, res, next) => {
     assignmentSchedulerController.deleteAssignmentForm(req, res);
 });
 
@@ -178,7 +178,7 @@ app.post('/assignment-scheduler/:uid/assignments/:aid/delete', (req, res) => {
 /*---------Edit an assignment----------*/
 
 /* Edit an assignment */
-app.get('/assignment-scheduler/:uid/assignments/:aid/edit', (req, res) => {
+app.get('/assignment-scheduler/:uid/assignments/:aid/edit', checkSignIn, (req, res, next) => {
     assignmentSchedulerController.editAssignment(req, res);
 });
 

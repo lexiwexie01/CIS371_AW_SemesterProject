@@ -2,6 +2,7 @@
 
 const Assignment = require('./assignment/Assignment');
 const User = require('./user/User');
+const removeUser = require('./user/User');
 const AssignmentSchedulerDB = require('./AssignmentSchedulerDB');
 
 
@@ -126,7 +127,7 @@ class AssignmentSchedulerController {
             res.send("Could not find user with those credentials.");
         } else {
             req.session.user = user;
-            res.render('user/userView', { user: user });
+            res.render('user/userView', { user: req.session.user });
         }
     }
 
@@ -163,13 +164,13 @@ class AssignmentSchedulerController {
         if (!user) {
             res.send("Could not find user with id of " + uid);
         } else {
-            res.render('user/userEdit', { user: user });
+            res.render('user/userEdit', { user: req.session.user });
         }
     }
 
     async updateUser(req, res) {
         console.log("Preparing to update user in controller");
-        let uid = req.params.uid;
+        let uid = req.session.user.uid;
         let user = await AssignmentSchedulerDB.findUser(uid);
 
         let testUser = new User(req.body.user);
@@ -186,6 +187,8 @@ class AssignmentSchedulerController {
             user.email = req.body.user.email;
             user.password = req.body.user.password;
 
+            req.session.user = user;
+
             console.log("About to call update");
             AssignmentSchedulerDB.updateUser(user);
 
@@ -195,13 +198,13 @@ class AssignmentSchedulerController {
     }
 
     async deleteUserForm(req, res) {
-        let uid = req.params.uid;
+        let uid = req.session.user.uid;
         let user = await AssignmentSchedulerDB.findUser(uid);
 
         if (!user) {
             res.send("Could not find user with id of " + uid);
         } else {
-            res.render('user/userDeleteForm', { user: user });
+            res.render('user/userDeleteForm', { user: req.session.user });
         }
     }
 
@@ -212,7 +215,12 @@ class AssignmentSchedulerController {
         if (!user) {
             res.send("Could not find user with id of " + uid);
         } else {
+            new removeUser(user);
+
             AssignmentSchedulerDB.deleteUser(user);
+            req.session.destroy(function(){
+                console.log("user logged out.")
+             });
             res.writeHead(302, { 'Location': `/assignment-scheduler-login` });
             res.end();
         }
@@ -225,7 +233,7 @@ class AssignmentSchedulerController {
         if (!user) {
             res.send("Could not find user with id of " + uid);
         } else {
-            res.render('user/userView', { user: user });
+                res.render('user/userView', { user: req.session.user });
         }
     }
 
@@ -237,26 +245,19 @@ class AssignmentSchedulerController {
     
     // Assignment functions
     newAssignment(req, res) {
-        let uid = req.params.uid;
-        let user = AssignmentSchedulerDB.findUser(uid);
-        res.render('assignment/assignmentNew', {assignment: new Assignment(), user: user, req: req});
+        res.render('assignment/assignmentNew', {assignment: new Assignment(), user: req.session.user, req: req});
     }
 
     async createAssignment(req, res) {
-        console.log("About to create new assignment");
-        console.log(req.body);
-        let uid = req.params.uid;
-        let user = await AssignmentSchedulerDB.findUser(uid);
-
-        let latestAssignment = await AssignmentSchedulerDB.createAssignment(req.body.assignment, user);
+        let latestAssignment = await AssignmentSchedulerDB.createAssignment(req.body.assignment, req.session.user);
 
         if (latestAssignment.isValid(false)) {
             
             // Back to assignment list
-            res.writeHead(302, { 'Location': `/assignment-scheduler/${user.uid}/assignments` });
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user}/assignments` });
             res.end();
         } else {
-            res.render('assignment/assignmentNew', { assignment: latestAssignment, user: user, req: req });
+            res.render('assignment/assignmentNew', { assignment: latestAssignment, user: req.session.user, req: req });
         }
     }
     
@@ -267,7 +268,11 @@ class AssignmentSchedulerController {
         if (!assignment) {
             res.send("Could not find assignment with id of " + aid);
         } else {
-            res.render('assignment/assignmentEdit', { assignment: assignment, req: req });
+            if (assignment.userId === req.session.user.uid) {
+                res.render('assignment/assignmentEdit', { assignment: assignment, user: req.session.user, req: req });
+            } else {
+                res.send("Please log in.");
+            }
         }
     }
 
@@ -278,7 +283,7 @@ class AssignmentSchedulerController {
         if (!assignment) {
             res.send("Could not find assignment with id of " + aid);
         } else {
-            res.render('assignment/assignmentDeleteForm', { assignment: assignment });
+            res.render('assignment/assignmentDeleteForm', { assignment: assignment, user: req.session.user });
         }
     }
 
@@ -287,23 +292,22 @@ class AssignmentSchedulerController {
         let assignment = await AssignmentSchedulerDB.findAssignment(aid);
 
         if (!assignment) {
-            assignment.send("Could not find assignment with id of " + aid);
+            res.send("Could not find assignment with id of " + aid);
         } else {
             AssignmentSchedulerDB.deleteAssignment(assignment);
-            res.writeHead(302, { 'Location': `/assignment-scheduler/${assignment.userId}/assignments` });
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user.uid}/assignments` });
+            res.end();
         }
     }
 
     async updateAssignment(req, res) {
-        let uid = req.params.uid;
-        let user = await AssignmentSchedulerDB.findUser(uid);
         let aid = req.params.aid;
         let assignment = await AssignmentSchedulerDB.findAssignment(aid);
 
         let testAssignment = new Assignment(req.body.assignment);
         if (!testAssignment.isValid()) {
             testAssignment.aid = assignment.aid;
-            res.render('assignment/assignmentEdit', { assignment: testAssignment, user: user, req: req });
+            res.render('assignment/assignmentEdit', { assignment: testAssignment, user: req.session.user, req: req });
             return;
         }
         if (!assignment) {
@@ -315,17 +319,14 @@ class AssignmentSchedulerController {
             console.log("About to call update");
             AssignmentSchedulerDB.updateAssignment(assignment);
 
-            res.writeHead(302, { 'Location': `/assignment-scheduler/${user.uid}/assignments/${assignment.aid}` });
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user.uid}/assignments/${assignment.aid}` });
             res.end();
         }
     }
 
     async showAssignments(req, res) {
-        let uid = req.params.uid;
-        let user = await AssignmentSchedulerDB.findUser(uid);
-
-        let assignments = await AssignmentSchedulerDB.userAssignments(uid);
-        res.render('assignment/assignmentIndex', {assignments: assignments, user: user, req: req});
+        let assignments = await AssignmentSchedulerDB.userAssignments(req.session.user.uid);
+        res.render('assignment/assignmentIndex', {assignments: assignments, user: req.session.user, req: req});
     }
 
     async rawAssignmentIndex(req, res) {
@@ -340,7 +341,11 @@ class AssignmentSchedulerController {
         if (!assignment) {
             res.send("Could not find assignment with id of " + aid);
         } else {
-            res.render('assignment/assignmentView', { assignment: assignment });
+            if (assignment.userId === req.session.user.uid) {
+                res.render('assignment/assignmentView', { assignment: assignment, user: req.session.user });
+            } else {
+                res.send("Please log in.");
+            }
         }
     }
 

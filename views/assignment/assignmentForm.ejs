@@ -2,10 +2,10 @@
 <% 
   if (assignment.aid) {
     submitLabel = "Update Assignment";
-    route = `/assignment-scheduler/${assignment.userId}/assignments/${assignment.aid}`;
+    route = `/assignment-scheduler/${user.uid}/assignments/${assignment.aid}`;
   } else {
     submitLabel = "Create Assignment";
-    route = `/assignment-scheduler/${req.params.uid}/assignments/new`;
+    route = `/assignment-scheduler/${user.uid}/assignments/new`;
   }
 %>
                 <form name="assignmentForm" action="<%=route%>" accept-charset="UTF-8" method="post">

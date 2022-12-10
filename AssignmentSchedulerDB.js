@@ -86,7 +86,6 @@ class AssignmentSchedulerDB {
     static deleteUser(user) {
         return new Promise((resolve, reject) => {
             this.db.run(`DELETE FROM Users WHERE uid="${user.uid}"`, function(err, data) {
-                user.removeUser(user);
                 user.uid = lastUID;
                 resolve(user)
             })

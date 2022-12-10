@@ -41,13 +41,15 @@ class User {
 
         return this.errors.length <= 0;
     }
+}
 
-    removeUser() {
-        for (let i = 0; i < emailUserList.length; i++) {
-            if (this.uid === emailUserList[i].uid) {
-                emailUserList.splice(i, 1);
-            }
+function removeUser(user) {
+    for (let i = 0; i < emailUserList.length; i++) {
+        if (user.uid === emailUserList[i].uid) {
+            emailUserList.splice(i, 1);
         }
     }
 }
-module.exports = User;
+
+
+module.exports = User, removeUser;
