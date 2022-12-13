@@ -15,13 +15,14 @@ class AssignmentSchedulerDB {
             this.db.run('DROP TABLE IF EXISTS Assignments')
             this.db.run('DROP TABLE IF EXISTS GuestAssignments')
 
-            this.db.run('CREATE TABLE IF NOT EXISTS Users (uid INTEGER PRIMARY KEY, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL);');
+            this.db.run('CREATE TABLE IF NOT EXISTS Users (uid INTEGER PRIMARY KEY, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, CONSTRAINT unique_email UNIQUE (email));');
             this.db.run('INSERT INTO Users (uid, fname, lname, email, password) VALUES ("1", "Alexis", "Webster", "alexis@web.com", "$Password1");');
             this.db.run('INSERT INTO Users (uid, fname, lname, email, password) VALUES ("2", "test", "user", "test@user.com", "@TestUser2");');
             this.db.run('INSERT INTO Users (uid, fname, lname, email, password) VALUES ("3", "George", "Washington", "george@wash.com", "GeorgePass@1");');
             this.db.run('INSERT INTO Users (uid, fname, lname, email, password) VALUES ("4", "Cat", "Dog", "cat@dog.org", "CatDog#4");');
             
-            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, dueDate TEXT NOT NULL, FOREIGN KEY(userId) REFERENCES Users(uid));');
+            // requiresResearch, requiresSlideshow, and studyGuide are booleans
+            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, dueDate TEXT NOT NULL, pageRange INTEGER, pages INTEGER, numQuestions INTEGER, requiresResearch TEXT, requiresSlideshow TEXT, studyGuide TEXT, numTopics INTEGER, minutes INTEGER, FOREIGN KEY(userId) REFERENCES Users(uid));');
             this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("1", "Essay", "1", "2022-12-22");');
             this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("2", "Project", "1", "2022-12-30");');
             this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("3", "Essay", "1", "2022-12-20");');
