@@ -280,6 +280,8 @@ class AssignmentSchedulerController {
     }
 
     async createAssignment(req, res) {
+
+        // TODO: Update to have options with new assignment types
         let latestAssignment = await AssignmentSchedulerDB.createAssignment(req.body.assignment, req.session.user);
 
         if (latestAssignment.isValid(false)) {
@@ -321,6 +323,8 @@ class AssignmentSchedulerController {
     async deleteAssignment(req, res) {
         let aid = req.params.aid;
         let assignment = await AssignmentSchedulerDB.findAssignment(aid);
+        // TODO: Update to have options with new assignment types
+
 
         if (!assignment) {
             res.send("Could not find assignment with id of " + aid);
@@ -332,6 +336,7 @@ class AssignmentSchedulerController {
     }
 
     async updateAssignment(req, res) {
+        // TODO: Update to have options with new assignment types
         let aid = req.params.aid;
         let assignment = await AssignmentSchedulerDB.findAssignment(aid);
 

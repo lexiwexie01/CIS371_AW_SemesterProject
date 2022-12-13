@@ -2,6 +2,10 @@
 
 <html>
 
+<% 
+    let assignmentType = assignment.constructor.name;
+%> 
+
 <head>
     <style>
         label {
@@ -11,9 +15,23 @@
 </head>
 
 <body>
-    <h1>Edit Assignment</h1>
+    <h1>Edit <%= assignmentType %></h1>
 
-    <%- include('assignmentForm') %>
+    <% if (assignment instanceof Essay) { %>
+        <%- include('essayForm') %>
+    <% } else if (assignment instanceof Homework) { %>
+        <%- include('homeworkForm') %>
+    <% } else if (assignment instanceof Presentation) { %>
+        <%- include('presentationForm') %>
+    <% } else if (assignment instanceof Reading) { %>
+        <%- include('readingForm') %>
+    <% } else if (assignment instanceof Studying) { %>
+        <%- include('studyingForm') %>
+    <% } else if (assignment instanceof Video) { %>
+        <%- include('videoForm') %>
+    <% } else { %>
+        <%- include('assignmentForm') %>
+    <% } %>
 
         <a href="/assignment-scheduler/<%= user.uid %>/assignments/<%= assignment.aid %>">Back</a>
 
