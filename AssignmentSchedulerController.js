@@ -1,6 +1,13 @@
 // Alexis Webster
 
 const Assignment = require('./assignment/Assignment');
+const Essay = require('./assignment/assignment.types/Essay');
+const Homework = require('./assignment/assignment.types/Homework');
+const Presentation = require('./assignment/assignment.types/Presentation');
+const Reading = require('./assignment/assignment.types/Reading');
+const Studying = require('./assignment/assignment.types/Studying');
+const Video = require('./assignment/assignment.types/Video');
+
 const User = require('./user/User');
 const removeUser = require('./user/User');
 const AssignmentSchedulerDB = require('./AssignmentSchedulerDB');
@@ -246,6 +253,30 @@ class AssignmentSchedulerController {
     // Assignment functions
     newAssignment(req, res) {
         res.render('assignment/assignmentNew', {assignment: new Assignment(), user: req.session.user, req: req});
+    }
+
+    newEssay(req, res) {
+        res.render('assignment/assignmentNew', {assignment: new Essay(), user: req.session.user, req: req});
+    }
+
+    newHomework(req, res) {
+        res.render('assignment/assignmentNew', {assignment: new Homework(), user: req.session.user, req: req});
+    }
+
+    newPresentation(req, res) {
+        res.render('assignment/assignmentNew', {assignment: new Presentation(), user: req.session.user, req: req});
+    }
+
+    newReading(req, res) {
+        res.render('assignment/assignmentNew', {assignment: new Reading(), user: req.session.user, req: req});
+    }
+
+    newStudying(req, res) {
+        res.render('assignment/assignmentNew', {assignment: new Studying(), user: req.session.user, req: req});
+    }
+
+    newVideo(req, res) {
+        res.render('assignment/assignmentNew', {assignment: new Video(), user: req.session.user, req: req});
     }
 
     async createAssignment(req, res) {

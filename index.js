@@ -151,6 +151,79 @@ app.post('/assignment-scheduler/:uid/assignments/new', (req, res) => {
     assignmentSchedulerController.createAssignment(req, res);
 });
 
+/*---------Create a new essay----------*/
+
+/* Display a form to create a new essay */
+app.get('/assignment-scheduler/:uid/assignments/new/essay', checkSignIn, (req, res, next) => {
+    assignmentSchedulerController.newEssay(req, res);
+});
+
+/* Create a new essay from assignments page*/
+app.post('/assignment-scheduler/:uid/assignments/new/essay', (req, res) => {
+    assignmentSchedulerController.createEssay(req, res);
+});
+
+/*---------Create a new homework----------*/
+
+/* Display a form to create a new homework */
+app.get('/assignment-scheduler/:uid/assignments/new/homework', checkSignIn, (req, res, next) => {
+    assignmentSchedulerController.newHomework(req, res);
+});
+
+/* Create a new homework from assignments page*/
+app.post('/assignment-scheduler/:uid/assignments/new/homework', (req, res) => {
+    assignmentSchedulerController.createHomework(req, res);
+});
+
+/*---------Create a new presentation----------*/
+
+/* Display a form to create a new presentation */
+app.get('/assignment-scheduler/:uid/assignments/new/presentation', checkSignIn, (req, res, next) => {
+    assignmentSchedulerController.newPresentation(req, res);
+});
+
+/* Create a new presentation from assignments page*/
+app.post('/assignment-scheduler/:uid/assignments/new/presentation', (req, res) => {
+    assignmentSchedulerController.createPresentation(req, res);
+});
+
+/*---------Create a new reading----------*/
+
+/* Display a form to create a new reading */
+app.get('/assignment-scheduler/:uid/assignments/new/reading', checkSignIn, (req, res, next) => {
+    assignmentSchedulerController.newReading(req, res);
+});
+
+/* Create a new reading from assignments page*/
+app.post('/assignment-scheduler/:uid/assignments/new/reading', (req, res) => {
+    assignmentSchedulerController.createReading(req, res);
+});
+
+/*---------Create a new studying----------*/
+
+/* Display a form to create a new studying */
+app.get('/assignment-scheduler/:uid/assignments/new/studying', checkSignIn, (req, res, next) => {
+    assignmentSchedulerController.newStudying(req, res);
+});
+
+/* Create a new studying from assignments page*/
+app.post('/assignment-scheduler/:uid/assignments/new/studying', (req, res) => {
+    assignmentSchedulerController.createStudying(req, res);
+});
+
+/*---------Create a new video----------*/
+
+/* Display a form to create a new video */
+app.get('/assignment-scheduler/:uid/assignments/new/video', checkSignIn, (req, res, next) => {
+    assignmentSchedulerController.newVideo(req, res);
+});
+
+/* Create a new video from assignments page*/
+app.post('/assignment-scheduler/:uid/assignments/new/video', (req, res) => {
+    assignmentSchedulerController.createVideo(req, res);
+});
+
+
 /*---------Display assignment(s)----------*/
 
 /* Display a user's assignments */
