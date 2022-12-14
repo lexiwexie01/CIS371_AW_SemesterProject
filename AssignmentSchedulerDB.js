@@ -22,7 +22,7 @@ class AssignmentSchedulerDB {
             this.db.run('INSERT INTO Users (uid, fname, lname, email, password) VALUES ("4", "Cat", "Dog", "cat@dog.org", "CatDog#4");');
             
             // requiresResearch, requiresSlideshow, and studyGuide are booleans
-            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, dueDate TEXT NOT NULL, pageRange INTEGER, pages INTEGER, numQuestions INTEGER, requiresResearch TEXT, requiresSlideshow TEXT, studyGuide TEXT, numTopics INTEGER, minutes INTEGER, FOREIGN KEY(userId) REFERENCES Users(uid));');
+            this.db.run('CREATE TABLE IF NOT EXISTS Assignments (aid INTEGER PRIMARY KEY, name TEXT NOT NULL, userId INTEGER NOT NULL, dueDate TEXT NOT NULL, pages INTEGER, numQuestions INTEGER, requiresResearch TEXT, requiresSlideshow TEXT, studyGuide TEXT, numTopics INTEGER, minutes INTEGER, FOREIGN KEY(userId) REFERENCES Users(uid));');
             this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("1", "Essay", "1", "2022-12-22");');
             this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("2", "Project", "1", "2022-12-30");');
             this.db.run('INSERT INTO Assignments (aid, name, userId, dueDate) VALUES ("3", "Essay", "1", "2022-12-20");');

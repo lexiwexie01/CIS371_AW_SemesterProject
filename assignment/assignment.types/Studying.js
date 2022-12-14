@@ -14,7 +14,7 @@ class Studying extends Assignment {
     isValid() {
         this.errors = [];
 
-        if (!this.studyGuide) {
+        if (this.studyGuide == null || this.studyGuide == undefined) {
             this.errors.push("You must enter whether you have a study guide.");
         }
 

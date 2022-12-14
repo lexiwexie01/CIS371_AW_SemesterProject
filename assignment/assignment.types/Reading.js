@@ -4,7 +4,7 @@ class Reading extends Assignment {
     constructor(description) {
         if (description) {
             super(description);
-            this.page_ranges = description.page_ranges;
+            this.pages = description.pages;
         }
         this.errors = [];
     }
@@ -12,8 +12,8 @@ class Reading extends Assignment {
     isValid() {
         this.errors = [];
 
-        if (!this.page_ranges || this.name.length <= 0) {
-            this.errors.push("The reading assignment must have a page range.");
+        if (!this.pages || this.pages <= 0) {
+            this.errors.push("The reading assignment must have a number of pages.");
         }
 
         return this.errors.length <= 0;

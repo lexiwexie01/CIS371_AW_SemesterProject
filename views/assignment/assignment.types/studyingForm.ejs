@@ -1,1 +1,59 @@
 <!-- Alexis Webster -->
+<% 
+  if (assignment.aid) {
+    submitLabel = "Update Study Schedule";
+    route = `/assignment-scheduler/${user.uid}/assignments/${assignment.aid}`;
+  } else {
+    submitLabel = "Create Study Schedule";
+    route = `/assignment-scheduler/${user.uid}/assignments/new/studying`;
+  }
+%>
+                <form name="assignmentForm" action="<%=route%>" accept-charset="UTF-8" method="post">
+                    <div class=" field ">
+                        <label for="assignment_name ">Name</label>
+                        <input type="text" name="assignment[name]" id="name" value="<%= assignment.name %>" required>
+                    </div>
+
+                    <div class="padding">
+                      <style>
+                          .padding {
+                              height: 10px;
+                          }
+                      </style>
+                    </div>
+
+                    <div class=" field ">
+                      <label for="assignment_dueDate">Due Date</label>
+                      <input type="date" name="assignment[dueDate]" id="dueDate" value="<%= assignment.dueDate %>" required>
+                    </div>
+
+                    <div class="padding"></div>
+
+                    <div class=" field ">
+                        <label for="assignment_studyGuide">Does you have a study guide?</label>
+                        <select name="assignment[studyGuide]" id="studyGuide" value="<%= assignment.studyGuide %>" required>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+
+                    <div class="padding"></div>
+
+                    <div class=" field ">
+                        <label for="assignment_numQuestions">If you have a study guide, enter the number of questions on it.</label>
+                        <input type="number" name="assignment[numQuestions]" id="numQuestions" value="<%= assignment.numQuestions %>">
+                    </div>
+
+                    <div class="padding"></div>
+
+                    <div class=" field ">
+                        <label for="assignment_numTopics">If you do not have a study guide, enter the number of topics you need to study.</label>
+                        <input type="number" name="assignment[numTopics]" id="numTopics" value="<%= assignment.numTopics %>">
+                    </div>
+
+                    <div class="padding"></div>
+
+                    <div class="actions">
+                        <input type="submit" name="commit" value="<%= submitLabel %>" />
+                    </div>
+                </form>

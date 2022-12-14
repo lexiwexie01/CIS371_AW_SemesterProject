@@ -1,2 +1,42 @@
 <!-- Alexis Webster -->
+<% 
+  if (assignment.aid) {
+    submitLabel = "Update Homework";
+    route = `/assignment-scheduler/${user.uid}/assignments/${assignment.aid}`;
+  } else {
+    submitLabel = "Create Homework";
+    route = `/assignment-scheduler/${user.uid}/assignments/new/homework`;
+  }
+%>
+                <form name="assignmentForm" action="<%=route%>" accept-charset="UTF-8" method="post">
+                    <div class=" field ">
+                        <label for="assignment_name ">Name</label>
+                        <input type="text" name="assignment[name]" id="name" value="<%= assignment.name %>" required>
+                    </div>
 
+                    <div class="padding">
+                      <style>
+                          .padding {
+                              height: 10px;
+                          }
+                      </style>
+                    </div>
+
+                    <div class=" field ">
+                      <label for="assignment_dueDate">Due Date</label>
+                      <input type="date" name="assignment[dueDate]" id="dueDate" value="<%= assignment.dueDate %>" required>
+                    </div>
+
+                    <div class="padding"></div>
+
+                    <div class=" field ">
+                        <label for="assignment_numQuestions">Number of Questions</label>
+                        <input type="number" name="assignment[numQuestions]" id="numQuestions" value="<%= assignment.numQuestions %>" required>
+                      </div>
+
+                    <div class="padding"></div>
+
+                    <div class="actions">
+                        <input type="submit" name="commit" value="<%= submitLabel %>" />
+                    </div>
+                </form>
