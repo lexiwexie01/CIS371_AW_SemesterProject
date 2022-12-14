@@ -1,4 +1,5 @@
 // Alexis Webster
+const Assignment = require('../Assignment');
 
 class Presentation extends Assignment {
     constructor(description) {
@@ -24,3 +25,4 @@ class Presentation extends Assignment {
         return this.errors.length <= 0;
     }
 }
+module.exports = Presentation;

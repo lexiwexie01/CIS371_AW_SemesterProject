@@ -1,4 +1,5 @@
 // Alexis Webster
+const Assignment = require('../Assignment');
 
 class Reading extends Assignment {
     constructor(description) {
@@ -19,3 +20,5 @@ class Reading extends Assignment {
         return this.errors.length <= 0;
     }
 }
+
+module.exports = Reading;

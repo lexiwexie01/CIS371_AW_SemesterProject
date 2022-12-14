@@ -2,6 +2,12 @@
 
 var sqlite3 = require('sqlite3').verbose();
 let Assignment = require('./assignment/Assignment');
+const Essay = require('./assignment/assignment.types/Essay');
+const Homework = require('./assignment/assignment.types/Homework');
+const Presentation = require('./assignment/assignment.types/Presentation');
+const Reading = require('./assignment/assignment.types/Reading');
+const Studying = require('./assignment/assignment.types/Studying');
+const Video = require('./assignment/assignment.types/Video');
 let User = require('./user/User');
 let lastUID = 0;
 let lastAID = 0;
@@ -113,11 +119,102 @@ class AssignmentSchedulerDB {
         });
     }
 
+    /* ----- Create methods for all assignment types ----- */
     static createAssignment(description, user) {
         let newAssignment = new Assignment(description);
-        if (newAssignment.isValid(false)) {
+        if (newAssignment.isValid()) {
             return new Promise((resolve, reject) => {
                 this.db.run(`INSERT INTO Assignments (name, userId, dueDate) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}")`,
+                    function(err, data) {
+                        newAssignment.aid = lastAID + 1;
+                        resolve(newAssignment);
+                    });
+            });
+        } else {
+            return newAssignment;
+        }
+    }
+
+    static createEssay(description, user) {
+        let newAssignment = new Essay(description);
+        if (newAssignment.isValid()) {
+            return new Promise((resolve, reject) => {
+                this.db.run(`INSERT INTO Assignments (name, userId, dueDate, pages) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}", "${newAssignment.pages}")`,
+                    function(err, data) {
+                        newAssignment.aid = lastAID + 1;
+                        resolve(newAssignment);
+                    });
+            });
+        } else {
+            return newAssignment;
+        }
+    }
+
+    static createHomework(description, user) {
+        let newAssignment = new Homework(description);
+        if (newAssignment.isValid()) {
+            return new Promise((resolve, reject) => {
+                this.db.run(`INSERT INTO Assignments (name, userId, dueDate, numQuestions) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}", "${newAssignment.numQuestions}")`,
+                    function(err, data) {
+                        newAssignment.aid = lastAID + 1;
+                        resolve(newAssignment);
+                    });
+            });
+        } else {
+            return newAssignment;
+        }
+    }
+
+    static createPresentation(description, user) {
+        let newAssignment = new Presentation(description);
+        if (newAssignment.isValid()) {
+            return new Promise((resolve, reject) => {
+                this.db.run(`INSERT INTO Assignments (name, userId, dueDate, requiresResearch, requiresSlideshow) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}", "${newAssignment.requiresResearch}", "${newAssignment.requiresSlideshow}")`,
+                    function(err, data) {
+                        newAssignment.aid = lastAID + 1;
+                        resolve(newAssignment);
+                    });
+            });
+        } else {
+            return newAssignment;
+        }
+    }
+
+    static createReading(description, user) {
+        let newAssignment = new Reading(description);
+        if (newAssignment.isValid()) {
+            return new Promise((resolve, reject) => {
+                this.db.run(`INSERT INTO Assignments (name, userId, dueDate, pages) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}", "${newAssignment.pages}")`,
+                    function(err, data) {
+                        newAssignment.aid = lastAID + 1;
+                        resolve(newAssignment);
+                    });
+            });
+        } else {
+            return newAssignment;
+        }
+    }
+
+    static createStudying(description, user) {
+        let newAssignment = new Studying(description);
+        if (newAssignment.isValid()) {
+            return new Promise((resolve, reject) => {
+                this.db.run(`INSERT INTO Assignments (name, userId, dueDate, studyGuide, numQuestions, numTopics) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}", "${newAssignment.studyGuide}", "${newAssignment.numQuestions}", "${newAssignment.numTopics}")`,
+                    function(err, data) {
+                        newAssignment.aid = lastAID + 1;
+                        resolve(newAssignment);
+                    });
+            });
+        } else {
+            return newAssignment;
+        }
+    }
+
+    static createVideo(description, user) {
+        let newAssignment = new Video(description);
+        if (newAssignment.isValid()) {
+            return new Promise((resolve, reject) => {
+                this.db.run(`INSERT INTO Assignments (name, userId, dueDate, minutes) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}", "${newAssignment.minutes}")`,
                     function(err, data) {
                         newAssignment.aid = lastAID + 1;
                         resolve(newAssignment);
@@ -138,9 +235,11 @@ class AssignmentSchedulerDB {
     }
 
     static updateAssignment(assignment) {
-        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}", dueDate="${assignment.dueDate} WHERE aid="${assignment.aid}"`);
+        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}", dueDate="${assignment.dueDate}", pages="${assignment.pages}", numQuestions="${assignment.numQuestions}", requiresResearch="${assignment.requiresResearch}", requiresSlideshow="${assignment.requiresSlideshow}", studyGuide="${assignment.studyGuide}", numTopics="${assignment.numTopics}", minutes="${assignment.minutes}" WHERE aid="${assignment.aid}"`);
     }
 
+    
+    /* ----- Guest Assignment Methods ----- */
     static allGuestAssignments() {
         return new Promise((resolve, reject) => {
             this.db.all('SELECT * FROM GuestAssignments', (err, response) => {

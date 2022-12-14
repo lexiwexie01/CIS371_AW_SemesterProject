@@ -1,4 +1,5 @@
 // Alexis Webster
+const Assignment = require('../Assignment');
 
 class Studying extends Assignment {
     constructor(description) {

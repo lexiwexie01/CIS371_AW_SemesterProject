@@ -280,12 +280,25 @@ class AssignmentSchedulerController {
     }
 
     async createAssignment(req, res) {
+        let latestAssignment = null;
 
-        // TODO: Update to have options with new assignment types
-        let latestAssignment = await AssignmentSchedulerDB.createAssignment(req.body.assignment, req.session.user);
+        if (req.body.assignment instanceof Essay) {
+            latestAssignment = await AssignmentSchedulerDB.createEssay(req.body.assignment, req.session.user);
+        } else if (req.body.assignment instanceof Homework) {
+            latestAssignment = await AssignmentSchedulerDB.createHomework(req.body.assignment, req.session.user);
+        } else if (req.body.assignment instanceof Presentation) {
+            latestAssignment = await AssignmentSchedulerDB.createPresentation(req.body.assignment, req.session.user);
+        } else if (req.body.assignment instanceof Reading) {
+            latestAssignment = await AssignmentSchedulerDB.createReading(req.body.assignment, req.session.user);
+        } else if (req.body.assignment instanceof Studying) {
+            latestAssignment = await AssignmentSchedulerDB.createStudying(req.body.assignment, req.session.user);
+        } else if (req.body.assignment instanceof Video) {
+            latestAssignment = await AssignmentSchedulerDB.createVideo(req.body.assignment, req.session.user);
+        } else {
+            latestAssignment = await AssignmentSchedulerDB.createAssignment(req.body.assignment, req.session.user);
+        }
 
-        if (latestAssignment.isValid(false)) {
-            
+        if (latestAssignment.isValid()) {
             // Back to assignment list
             res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user}/assignments` });
             res.end();
@@ -323,8 +336,6 @@ class AssignmentSchedulerController {
     async deleteAssignment(req, res) {
         let aid = req.params.aid;
         let assignment = await AssignmentSchedulerDB.findAssignment(aid);
-        // TODO: Update to have options with new assignment types
-
 
         if (!assignment) {
             res.send("Could not find assignment with id of " + aid);
@@ -336,7 +347,6 @@ class AssignmentSchedulerController {
     }
 
     async updateAssignment(req, res) {
-        // TODO: Update to have options with new assignment types
         let aid = req.params.aid;
         let assignment = await AssignmentSchedulerDB.findAssignment(aid);
 
@@ -351,6 +361,13 @@ class AssignmentSchedulerController {
         } else {
             assignment.name = req.body.assignment.name;
             assignment.dueDate = req.body.assignment.dueDate;
+            assignment.pages = req.body.assignment.pages;
+            assignment.numQuestions = req.body.assignment.numQuestions;
+            assignment.requiresResearch = req.body.assignment.requiresResearch;
+            assignment.requiresSlideshow = req.body.assignment.requiresSlideshow;
+            assignment.studyGuide = req.body.assignment.studyGuide;
+            assignment.numTopics = req.body.assignment.numTopics;
+            assignment.minutes = req.body.assignment.minutes;
 
             console.log("About to call update");
             AssignmentSchedulerDB.updateAssignment(assignment);
