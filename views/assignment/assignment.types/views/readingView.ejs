@@ -22,7 +22,15 @@
         let due = new Date(assignment.dueDate);
         let amtTime = due.getTime() - today.getTime();
         let daysTillDue = Math.ceil(amtTime / (1000 * 3600 * 24));
+        let pagesPerDay = 0;
+        let numExtra = 0;
 
+        if (assignment.pages % daysTillDue === 0) {
+            pagesPerDay = assignment.pages / daysTillDue;
+        } else {
+            pagesPerDay = Math.floor(assignment.pages / daysTillDue);
+            numExtra = assignment.pages % daysTillDue;
+        }
     %>
 
     <div class="padding"></div>
@@ -60,9 +68,27 @@
                     <span><span class='label'>Number of Pages:</span>
                 <%= assignment.pages %>
                     </span><br>
-                    
+
                     <div class="padding"></div>
 
+                    <h2>Reading Plan:</h2>
+                
+                    <div class="padding"></div>
+
+                    <span><span class='label'>Read this many pages per day:</span>
+                    <%= pagesPerDay %> page(s)
+                    </span><br>
+
+                    <div class="padding"></div>
+
+                    <% if (numExtra > 0) { %>
+                        <span><span class='label'> On the last day read:</span>
+                        <%= numExtra %> extra page(s).
+                        </span><br>
+                    <% } %>
+                    
+                    <div class="padding"></div>
+                    
                     <p>
                         <a href="/assignment-scheduler/<%= assignment.userId %>/assignments">Back</a>
                     </p>

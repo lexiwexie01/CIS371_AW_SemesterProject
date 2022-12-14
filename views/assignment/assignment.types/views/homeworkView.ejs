@@ -22,6 +22,15 @@
         let due = new Date(assignment.dueDate);
         let amtTime = due.getTime() - today.getTime();
         let daysTillDue = Math.ceil(amtTime / (1000 * 3600 * 24));
+        let questionsPerDay = 0;
+        let numExtra = 0;
+
+        if (assignment.numQuestions % daysTillDue === 0) {
+            questionsPerDay = assignment.numQuestions / daysTillDue;
+        } else {
+            questionsPerDay = Math.floor(assignment.numQuestions / daysTillDue);
+            numExtra = assignment.numQuestions % daysTillDue;
+        }
 
     %>
 
@@ -60,6 +69,24 @@
                     <span><span class='label'>Number of Questions:</span>
                 <%= assignment.numQuestions %>
                     </span><br>
+                    
+                    <div class="padding"></div>
+
+                    <h2>Homework Plan:</h2>
+                
+                    <div class="padding"></div>
+
+                    <span><span class='label'>Answer this many questions per day:</span>
+                    <%= questionsPerDay %> question(s)
+                    </span><br>
+
+                    <div class="padding"></div>
+
+                    <% if (numExtra > 0) { %>
+                        <span><span class='label'> On the last day complete:</span>
+                        <%= numExtra %> extra question(s).
+                        </span><br>
+                    <% } %>
                     
                     <div class="padding"></div>
 

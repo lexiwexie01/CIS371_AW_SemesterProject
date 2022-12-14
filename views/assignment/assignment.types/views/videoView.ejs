@@ -22,7 +22,15 @@
         let due = new Date(assignment.dueDate);
         let amtTime = due.getTime() - today.getTime();
         let daysTillDue = Math.ceil(amtTime / (1000 * 3600 * 24));
+        let minutesPerDay = 0;
+        let numExtra = 0;
 
+        if (assignment.minutes % daysTillDue === 0) {
+            minutesPerDay = assignment.minutes / daysTillDue;
+        } else {
+            minutesPerDay = Math.floor(assignment.minutes / daysTillDue);
+            numExtra = assignment.minutes % daysTillDue;
+        }
     %>
 
     <div class="padding"></div>
@@ -60,6 +68,24 @@
                     <span><span class='label'>Number of Minutes:</span>
                 <%= assignment.minutes %>
                     </span><br>
+
+                    <div class="padding"></div>
+
+                    <h2>Video Plan:</h2>
+                
+                    <div class="padding"></div>
+
+                    <span><span class='label'>Watch this many minutes per day:</span>
+                    <%= minutesPerDay %> minute(s)
+                    </span><br>
+
+                    <div class="padding"></div>
+
+                    <% if (numExtra > 0) { %>
+                        <span><span class='label'> On the last day watch:</span>
+                        <%= numExtra %> extra minute(s).
+                        </span><br>
+                    <% } %>
                     
                     <div class="padding"></div>
 

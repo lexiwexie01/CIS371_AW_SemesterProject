@@ -1,4 +1,4 @@
-// Alexis Webster
+// Alexis Webster; Essay.js
 const Assignment = require('../Assignment');
 
 class Essay extends Assignment {
