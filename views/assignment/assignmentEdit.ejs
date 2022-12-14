@@ -2,10 +2,6 @@
 
 <html>
 
-<% 
-    let assignmentType = assignment.constructor.name;
-%> 
-
 <head>
     <style>
         label {
@@ -15,21 +11,26 @@
 </head>
 
 <body>
-    <h1>Edit <%= assignmentType %></h1>
-
-    <% if (assignment instanceof Essay) { %>
+    <% if (assignment.pages && assignment.pages > 0 && (assignment.requiresResearch !== null && assignment.requiresResearch !== undefined && assignment.requiresResearch !== "")) { %>
+        <h1>Edit Essay</h1>
         <%- include('assignment.types/forms/essayForm') %>
-    <% } else if (assignment instanceof Homework) { %>
+    <% } else if (assignment.numQuestions && assignment.numQuestions > 0 && (assignment.studyGuide === null || assignment.studyGuide === undefined || assignment.studyGuide === "")) { %>
+        <h1>Edit Homework</h1>
         <%- include('assignment.types/forms/homeworkForm') %>
-    <% } else if (assignment instanceof Presentation) { %>
+    <% } else if (!assignment.numQuestions && assignment.requiresResearch !== null && assignment.requiresResearch !== undefined && assignment.requiresResearch !== "" && assignment.requiresSlideshow !== null && assignment.requiresSlideshow !== undefined && assignment.requiresSlideshow !== "") { %>
+        <h1>Edit Presentation</h1>
         <%- include('assignment.types/forms/presentationForm') %>
-    <% } else if (assignment instanceof Reading) { %>
+    <% } else if (assignment.pages && assignment.pages > 0 && (assignment.requiresResearch === null || assignment.requiresResearch === undefined || assignment.requiresResearch === "")) { %>
+        <h1>Edit Reading</h1>
         <%- include('assignment.types/forms/readingForm') %>
-    <% } else if (assignment instanceof Studying) { %>
+    <% } else if (assignment.studyGuide !== null && (assignment.requiresResearch === null || assignment.requiresResearch === undefined || assignment.requiresResearch === "") && assignment.studyGuide !== undefined && assignment.studyGuide !== "" && ((assignment.numQuestions > 0) || (assignment.numTopics > 0))) { %>
+        <h1>Edit Studying</h1>
         <%- include('assignment.types/forms/studyingForm') %>
-    <% } else if (assignment instanceof Video) { %>
+    <% } else if (assignment.minutes && assignment.minutes > 0) { %>
+        <h1>Edit Video</h1>
         <%- include('assignment.types/forms/videoForm') %>
     <% } else { %>
+        <h1>Edit Assignment</h1>
         <%- include('assignmentForm') %>
     <% } %>
 

@@ -417,16 +417,46 @@ class AssignmentSchedulerController {
         } else {
             assignment.name = req.body.assignment.name;
             assignment.dueDate = req.body.assignment.dueDate;
-            assignment.pages = req.body.assignment.pages;
-            assignment.numQuestions = req.body.assignment.numQuestions;
-            assignment.requiresResearch = req.body.assignment.requiresResearch;
-            assignment.requiresSlideshow = req.body.assignment.requiresSlideshow;
-            assignment.studyGuide = req.body.assignment.studyGuide;
-            assignment.numTopics = req.body.assignment.numTopics;
-            assignment.minutes = req.body.assignment.minutes;
 
-            console.log("About to call update");
-            AssignmentSchedulerDB.updateAssignment(assignment);
+            // Update essay
+            if (req.body.assignment.pages && req.body.assignment.pages > 0 && (req.body.assignment.requiresResearch !== null && req.body.assignment.requiresResearch !== undefined && req.body.assignment.requiresResearch !== "")) {
+                console.log("Updating essay");
+                console.log("require research: " + req.body.assignment.requiresResearch);
+                assignment.pages = req.body.assignment.pages;
+                assignment.requiresResearch = req.body.assignment.requiresResearch;
+                AssignmentSchedulerDB.updateEssay(assignment);
+            } // Update homework
+            else if (req.body.assignment.numQuestions && req.body.assignment.numQuestions > 0 && (req.body.assignment.studyGuide === null || req.body.assignment.studyGuide === undefined || req.body.assignment.studyGuide === "")) {
+                console.log("Updating homework");
+                assignment.numQuestions = req.body.assignment.numQuestions;
+                AssignmentSchedulerDB.updateHomework(assignment);
+            } // Update presentation
+            else if (!req.body.assignment.numQuestions && req.body.assignment.requiresResearch !== null && req.body.assignment.requiresResearch !== undefined && req.body.assignment.requiresResearch !== "" && req.body.assignment.requiresSlideshow !== null && req.body.assignment.requiresSlideshow !== undefined && req.body.assignment.requiresSlideshow !== "") {
+                console.log("Updating presentation");
+                assignment.requiresResearch = req.body.assignment.requiresResearch;
+                assignment.requiresSlideshow = req.body.assignment.requiresSlideshow;
+                AssignmentSchedulerDB.updatePresentation(assignment);
+            } // Update reading
+            else if (req.body.assignment.pages && req.body.assignment.pages > 0) {
+                console.log("Updating reading");
+                assignment.pages = req.body.assignment.pages;
+                AssignmentSchedulerDB.updateReading(assignment);
+            } // Update studying
+            else if (req.body.assignment.studyGuide !== null && req.body.assignment.studyGuide !== undefined && req.body.assignment.studyGuide !== "" && ((req.body.assignment.numQuestions > 0) || (req.body.assignment.numTopics > 0))) {
+                console.log("Updating studying");
+                assignment.studyGuide = req.body.assignment.studyGuide;
+                assignment.numQuestions = req.body.assignment.numQuestions;
+                assignment.numTopics = req.body.assignment.numTopics;
+                AssignmentSchedulerDB.updateStudying(assignment);
+            } // Update video 
+            else if (req.body.assignment.minutes && req.body.assignment.minutes > 0) {
+                console.log("Updating video");
+                assignment.minutes = req.body.assignment.minutes;
+                AssignmentSchedulerDB.updateVideo(assignment);
+            } else {
+                console.log("Updating assignment");
+                AssignmentSchedulerDB.updateAssignment(assignment);
+            }
 
             res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user.uid}/assignments/${assignment.aid}` });
             res.end();
@@ -451,18 +481,18 @@ class AssignmentSchedulerController {
             res.send("Could not find assignment with id of " + aid);
         } else {
             if (assignment.userId === req.session.user.uid) {
-                if (assignment.pages && (assignment.requiresResearch !== null || assignment.requiresResearch !== undefined || assignment.requiresResearch === "")) {
-                    res.render('assignment/assignment.types/essayView', { assignment: assignment, user: req.session.user });
-                } else if (assignment.numQuestions && (assignment.studyGuide === null || assignment.studyGuide === undefined || assignment.studyGuide === "")) {
-                    res.render('assignment/assignment.types/homeworkView', { assignment: assignment, user: req.session.user });
-                } else if (assignment instanceof Presentation) {
-                    res.render('assignment/assignment.types/presentationView', { assignment: assignment, user: req.session.user });
-                } else if (assignment instanceof Reading) {
-                    res.render('assignment/assignment.types/readingView', { assignment: assignment, user: req.session.user });
-                } else if (assignment instanceof Studying) {
-                    res.render('assignment/assignment.types/studyingView', { assignment: assignment, user: req.session.user });
-                } else if (assignment instanceof Video) {
-                    res.render('assignment/assignment.types/videoView', { assignment: assignment, user: req.session.user });
+                if (assignment.pages && assignment.pages > 0 && (assignment.requiresResearch !== null && assignment.requiresResearch !== undefined && assignment.requiresResearch !== "")) {
+                    res.render('assignment/assignment.types/views/essayView', { assignment: assignment, user: req.session.user });
+                } else if (assignment.numQuestions && assignment.numQuestions > 0 && (assignment.studyGuide === null || assignment.studyGuide === undefined || assignment.studyGuide === "")) {
+                    res.render('assignment/assignment.types/views/homeworkView', { assignment: assignment, user: req.session.user });
+                } else if (!assignment.numQuestions && assignment.requiresResearch !== null && assignment.requiresResearch !== undefined && assignment.requiresResearch !== "" && assignment.requiresSlideshow !== null && assignment.requiresSlideshow !== undefined && assignment.requiresSlideshow !== "") {
+                    res.render('assignment/assignment.types/views/presentationView', { assignment: assignment, user: req.session.user });
+                } else if (assignment.pages && assignment.pages > 0) {
+                    res.render('assignment/assignment.types/views/readingView', { assignment: assignment, user: req.session.user });
+                } else if (assignment.studyGuide !== null && assignment.studyGuide !== undefined && assignment.studyGuide !== "" && ((assignment.numQuestions > 0) || (assignment.numTopics > 0))) {
+                    res.render('assignment/assignment.types/views/studyingView', { assignment: assignment, user: req.session.user });
+                } else if (assignment.minutes && assignment.minutes > 0) {
+                    res.render('assignment/assignment.types/views/videoView', { assignment: assignment, user: req.session.user });
                 } else {
                     res.render('assignment/assignmentView', { assignment: assignment, user: req.session.user });
                 }

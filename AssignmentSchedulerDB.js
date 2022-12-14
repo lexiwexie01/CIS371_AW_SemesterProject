@@ -66,8 +66,6 @@ class AssignmentSchedulerDB {
     }
 
     static findUserFromLogin(email, password) {
-        console.log(typeof(email));
-        console.log(typeof(password));
         return new Promise((resolve, reject) => {
             this.db.get(`SELECT * FROM Users WHERE email LIKE "${email}" AND email LIKE "${email}"`, (err, result) => {
                 resolve(result);
@@ -235,7 +233,31 @@ class AssignmentSchedulerDB {
     }
 
     static updateAssignment(assignment) {
-        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}", dueDate="${assignment.dueDate}", pages="${assignment.pages}", numQuestions="${assignment.numQuestions}", requiresResearch="${assignment.requiresResearch}", requiresSlideshow="${assignment.requiresSlideshow}", studyGuide="${assignment.studyGuide}", numTopics="${assignment.numTopics}", minutes="${assignment.minutes}" WHERE aid="${assignment.aid}"`);
+        this.db.run(`UPDATE Assignments SET name="${assignment.name}", userId="${assignment.userId}", dueDate="${assignment.dueDate}" WHERE aid="${assignment.aid}"`);
+    }
+
+    static updateEssay(essay) {
+        this.db.run(`UPDATE Assignments SET name="${essay.name}", dueDate="${essay.dueDate}", pages="${essay.pages}", requiresResearch="${essay.requiresResearch}" WHERE aid="${essay.aid}"`);
+    }
+
+    static updateHomework(homework) {
+        this.db.run(`UPDATE Assignments SET name="${homework.name}", userId="${homework.userId}", dueDate="${homework.dueDate}", numQuestions="${homework.numQuestions}" WHERE aid="${homework.aid}"`);
+    }
+
+    static updatePresentation(presentation) {
+        this.db.run(`UPDATE Assignments SET name="${presentation.name}", userId="${presentation.userId}", dueDate="${presentation.dueDate}", requiresSlideshow="${presentation.requiresSlideshow}", requiresResearch="${presentation.requiresResearch}" WHERE aid="${presentation.aid}"`);
+    }
+
+    static updateReading(reading) {
+        this.db.run(`UPDATE Assignments SET name="${reading.name}", userId="${reading.userId}", dueDate="${reading.dueDate}", pages="${reading.pages}" WHERE aid="${reading.aid}"`);
+    }
+
+    static updateStudying(studying) {
+        this.db.run(`UPDATE Assignments SET name="${studying.name}", userId="${studying.userId}", dueDate="${studying.dueDate}", studyGuide="${studying.studyGuide}", numQuestions="${studying.numQuestions}", numTopics="${studying.numTopics}" WHERE aid="${studying.aid}"`);
+    }
+
+    static updateVideo(video) {
+        this.db.run(`UPDATE Assignments SET name="${video.name}", userId="${video.userId}", dueDate="${video.dueDate}", minutes="${video.minutes}" WHERE aid="${video.aid}"`);
     }
 
     
