@@ -139,7 +139,7 @@ class AssignmentSchedulerDB {
         let newAssignment = new Essay(description);
         if (newAssignment.isValid()) {
             return new Promise((resolve, reject) => {
-                this.db.run(`INSERT INTO Assignments (name, userId, dueDate, pages) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}", "${newAssignment.pages}")`,
+                this.db.run(`INSERT INTO Assignments (name, userId, dueDate, pages, requiresResearch) VALUES ("${newAssignment.name}", "${user.uid}", "${newAssignment.dueDate}", "${newAssignment.pages}", "${newAssignment.requiresResearch}")`,
                     function(err, data) {
                         newAssignment.aid = lastAID + 1;
                         resolve(newAssignment);

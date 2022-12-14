@@ -22,6 +22,7 @@
         let due = new Date(assignment.dueDate);
         let amtTime = due.getTime() - today.getTime();
         let daysTillDue = Math.ceil(amtTime / (1000 * 3600 * 24));
+
     %>
 
     <div class="padding"></div>
@@ -33,7 +34,7 @@
         <div class="padding"></div>
 
         <span><span class='label'>Type</span>
-        Assignment
+        Reading
             </span><br>
 
         <div class="padding"></div>
@@ -55,6 +56,10 @@
                         </span><br>
 
                     <div class="padding"></div>
+
+                    <span><span class='label'>Number of Pages:</span>
+                <%= assignment.pages %>
+                    </span><br>
                     
                     <div class="padding"></div>
 
@@ -63,8 +68,8 @@
                     </p>
 
                     <p>
-                        <a href="/assignment-scheduler/<%= assignment.userId %>/assignments/<%= assignment.aid %>/edit">Edit Assignment</a>
-                        <a href="/assignment-scheduler/<%= assignment.userId %>/assignments/<%= assignment.aid %>/delete">Delete Assignment</a>
+                        <a href="/assignment-scheduler/<%= assignment.userId %>/assignments/<%= assignment.aid %>/edit">Edit Reading</a>
+                        <a href="/assignment-scheduler/<%= assignment.userId %>/assignments/<%= assignment.aid %>/delete">Delete Reading</a>
                     </p>
 </body>
 

@@ -3,8 +3,8 @@ const Assignment = require('../Assignment');
 
 class Homework extends Assignment {
     constructor(description) {
+        super(description);
         if (description) {
-            super(description);
             this.numQuestions = description.numQuestions;
         }
         this.errors = [];

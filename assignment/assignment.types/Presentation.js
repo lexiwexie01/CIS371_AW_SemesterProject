@@ -3,8 +3,8 @@ const Assignment = require('../Assignment');
 
 class Presentation extends Assignment {
     constructor(description) {
+        super(description);
         if (description) {
-            super(description);
             this.requiresResearch = description.requiresResearch;
             this.requiresSlideshow = description.requiresSlideshow;
         }

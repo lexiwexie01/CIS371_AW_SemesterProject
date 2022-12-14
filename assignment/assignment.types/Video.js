@@ -3,8 +3,8 @@ const Assignment = require('../Assignment');
 
 class Video extends Assignment {
     constructor(description) {
+        super(description);
         if (description) {
-            super(description);
             this.minutes = description.minutes;
         }
         this.errors = [];

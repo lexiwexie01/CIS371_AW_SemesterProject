@@ -18,17 +18,17 @@
     <h1>Edit <%= assignmentType %></h1>
 
     <% if (assignment instanceof Essay) { %>
-        <%- include('essayForm') %>
+        <%- include('assignment.types/forms/essayForm') %>
     <% } else if (assignment instanceof Homework) { %>
-        <%- include('homeworkForm') %>
+        <%- include('assignment.types/forms/homeworkForm') %>
     <% } else if (assignment instanceof Presentation) { %>
-        <%- include('presentationForm') %>
+        <%- include('assignment.types/forms/presentationForm') %>
     <% } else if (assignment instanceof Reading) { %>
-        <%- include('readingForm') %>
+        <%- include('assignment.types/forms/readingForm') %>
     <% } else if (assignment instanceof Studying) { %>
-        <%- include('studyingForm') %>
+        <%- include('assignment.types/forms/studyingForm') %>
     <% } else if (assignment instanceof Video) { %>
-        <%- include('videoForm') %>
+        <%- include('assignment.types/forms/videoForm') %>
     <% } else { %>
         <%- include('assignmentForm') %>
     <% } %>

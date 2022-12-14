@@ -3,8 +3,8 @@ const Assignment = require('../Assignment');
 
 class Studying extends Assignment {
     constructor(description) {
+        super(description);
         if (description) {
-            super(description);
             this.studyGuide = description.studyGuide;
             this.numQuestions = description.numQuestions;
             this.numTopics = description.numTopics;
@@ -30,3 +30,4 @@ class Studying extends Assignment {
         return this.errors.length <= 0;
     }
 }
+module.exports = Studying;

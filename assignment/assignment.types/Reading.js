@@ -3,8 +3,8 @@ const Assignment = require('../Assignment');
 
 class Reading extends Assignment {
     constructor(description) {
+        super(description);
         if (description) {
-            super(description);
             this.pages = description.pages;
         }
         this.errors = [];

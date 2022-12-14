@@ -280,23 +280,79 @@ class AssignmentSchedulerController {
     }
 
     async createAssignment(req, res) {
-        let latestAssignment = null;
+        let latestAssignment = await AssignmentSchedulerDB.createAssignment(req.body.assignment, req.session.user);
 
-        if (req.body.assignment instanceof Essay) {
-            latestAssignment = await AssignmentSchedulerDB.createEssay(req.body.assignment, req.session.user);
-        } else if (req.body.assignment instanceof Homework) {
-            latestAssignment = await AssignmentSchedulerDB.createHomework(req.body.assignment, req.session.user);
-        } else if (req.body.assignment instanceof Presentation) {
-            latestAssignment = await AssignmentSchedulerDB.createPresentation(req.body.assignment, req.session.user);
-        } else if (req.body.assignment instanceof Reading) {
-            latestAssignment = await AssignmentSchedulerDB.createReading(req.body.assignment, req.session.user);
-        } else if (req.body.assignment instanceof Studying) {
-            latestAssignment = await AssignmentSchedulerDB.createStudying(req.body.assignment, req.session.user);
-        } else if (req.body.assignment instanceof Video) {
-            latestAssignment = await AssignmentSchedulerDB.createVideo(req.body.assignment, req.session.user);
+        if (latestAssignment.isValid()) {
+            // Back to assignment list
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user}/assignments` });
+            res.end();
         } else {
-            latestAssignment = await AssignmentSchedulerDB.createAssignment(req.body.assignment, req.session.user);
+            res.render('assignment/assignmentNew', { assignment: latestAssignment, user: req.session.user, req: req });
         }
+    }
+
+    async createEssay(req, res) {
+        let latestAssignment = await AssignmentSchedulerDB.createEssay(req.body.assignment, req.session.user);
+
+        if (latestAssignment.isValid()) {
+            // Back to assignment list
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user}/assignments` });
+            res.end();
+        } else {
+            res.render('assignment/assignmentNew', { assignment: latestAssignment, user: req.session.user, req: req });
+        }
+    }
+
+    async createHomework(req, res) {
+        let latestAssignment = await AssignmentSchedulerDB.createHomework(req.body.assignment, req.session.user);
+
+        if (latestAssignment.isValid()) {
+            // Back to assignment list
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user}/assignments` });
+            res.end();
+        } else {
+            res.render('assignment/assignmentNew', { assignment: latestAssignment, user: req.session.user, req: req });
+        }
+    }
+
+    async createPresentation(req, res) {
+        let latestAssignment = await AssignmentSchedulerDB.createPresentation(req.body.assignment, req.session.user);
+
+        if (latestAssignment.isValid()) {
+            // Back to assignment list
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user}/assignments` });
+            res.end();
+        } else {
+            res.render('assignment/assignmentNew', { assignment: latestAssignment, user: req.session.user, req: req });
+        }
+    }
+
+    async createReading(req, res) {
+        let latestAssignment = await AssignmentSchedulerDB.createReading(req.body.assignment, req.session.user);
+
+        if (latestAssignment.isValid()) {
+            // Back to assignment list
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user}/assignments` });
+            res.end();
+        } else {
+            res.render('assignment/assignmentNew', { assignment: latestAssignment, user: req.session.user, req: req });
+        }
+    }
+
+    async createStudying(req, res) {
+        let latestAssignment = await AssignmentSchedulerDB.createStudying(req.body.assignment, req.session.user);
+
+        if (latestAssignment.isValid()) {
+            // Back to assignment list
+            res.writeHead(302, { 'Location': `/assignment-scheduler/${req.session.user}/assignments` });
+            res.end();
+        } else {
+            res.render('assignment/assignmentNew', { assignment: latestAssignment, user: req.session.user, req: req });
+        }
+    }
+
+    async createVideo(req, res) {
+        let latestAssignment = await AssignmentSchedulerDB.createVideo(req.body.assignment, req.session.user);
 
         if (latestAssignment.isValid()) {
             // Back to assignment list
@@ -395,7 +451,21 @@ class AssignmentSchedulerController {
             res.send("Could not find assignment with id of " + aid);
         } else {
             if (assignment.userId === req.session.user.uid) {
-                res.render('assignment/assignmentView', { assignment: assignment, user: req.session.user });
+                if (assignment.pages && (assignment.requiresResearch !== null || assignment.requiresResearch !== undefined || assignment.requiresResearch === "")) {
+                    res.render('assignment/assignment.types/essayView', { assignment: assignment, user: req.session.user });
+                } else if (assignment.numQuestions && (assignment.studyGuide === null || assignment.studyGuide === undefined || assignment.studyGuide === "")) {
+                    res.render('assignment/assignment.types/homeworkView', { assignment: assignment, user: req.session.user });
+                } else if (assignment instanceof Presentation) {
+                    res.render('assignment/assignment.types/presentationView', { assignment: assignment, user: req.session.user });
+                } else if (assignment instanceof Reading) {
+                    res.render('assignment/assignment.types/readingView', { assignment: assignment, user: req.session.user });
+                } else if (assignment instanceof Studying) {
+                    res.render('assignment/assignment.types/studyingView', { assignment: assignment, user: req.session.user });
+                } else if (assignment instanceof Video) {
+                    res.render('assignment/assignment.types/videoView', { assignment: assignment, user: req.session.user });
+                } else {
+                    res.render('assignment/assignmentView', { assignment: assignment, user: req.session.user });
+                }
             } else {
                 res.send("Please log in.");
             }

@@ -36,6 +36,16 @@
 
                     <div class="padding"></div>
 
+                    <div class=" field ">
+                        <label for="assignment_requiresResearch">Does your essay require research?</label>
+                        <select name="assignment[requiresResearch]" id="requiresResearch" value="<%= assignment.requiresResearch %>" required>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+
+                    <div class="padding"></div>
+
                     <div class="actions">
                         <input type="submit" name="commit" value="<%= submitLabel %>" />
                     </div>
