@@ -18,7 +18,7 @@ class Essay extends Assignment {
             this.errors.push("The essay must have a minimum page amount.");
         }
 
-        if (!this.requiresResearch) {
+        if (this.requiresResearch == null) {
             this.errors.push("You must enter whether the essay requires research.");
         }
 
