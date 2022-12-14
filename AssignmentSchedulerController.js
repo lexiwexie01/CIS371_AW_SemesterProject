@@ -421,7 +421,6 @@ class AssignmentSchedulerController {
             // Update essay
             if (req.body.assignment.pages && req.body.assignment.pages > 0 && (req.body.assignment.requiresResearch !== null && req.body.assignment.requiresResearch !== undefined && req.body.assignment.requiresResearch !== "")) {
                 console.log("Updating essay");
-                console.log("require research: " + req.body.assignment.requiresResearch);
                 assignment.pages = req.body.assignment.pages;
                 assignment.requiresResearch = req.body.assignment.requiresResearch;
                 AssignmentSchedulerDB.updateEssay(assignment);

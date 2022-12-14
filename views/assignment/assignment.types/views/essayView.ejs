@@ -22,7 +22,25 @@
         let due = new Date(assignment.dueDate);
         let amtTime = due.getTime() - today.getTime();
         let daysTillDue = Math.ceil(amtTime / (1000 * 3600 * 24));
+        let days = daysTillDue;
+        let researchDays = 0;
+        let pagesPerDay = 0;
 
+        if (assignment.requiresResearch) {
+            if (days > 1 && days < 5) {
+                days -= 1;
+                researchDays = 1;
+            } else if (days > 4 && days < 11) {
+                days -= 2;
+                researchDays = 2;
+            } else if (days > 10) {
+                days -= 3;
+                researchDays = 3;
+            }
+        }
+
+        pagesPerDay = days / assignment.pages;
+        pagesPerDay = pagesPerDay.toFixed(1);
     %>
 
     <div class="padding"></div>
@@ -61,6 +79,24 @@
                 <%= assignment.pages %>
                     </span><br>
                     
+                    <div class="padding"></div>
+
+                    <h2>Essay Plan:</h2>
+                
+                    <div class="padding"></div>
+
+                    <% if (assignment.requiresResearch) { %>
+                    <span><span class='label'>Days for Research:</span>
+                    Spend <%= researchDays %> day(s) researching for your essay.
+                    </span><br>
+                    <% } %>
+                    
+                    <div class="padding"></div>
+
+                    <span><span class='label'>Write this many pages per day:</span>
+                    <%= pagesPerDay %> pages
+                    </span><br>
+
                     <div class="padding"></div>
 
                     <p>
